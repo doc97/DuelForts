@@ -75,16 +75,16 @@ local function renderTowers()
     love.graphics.rectangle(
         "fill",
         50,
-        towerHeightPx * (100 - PlayerResources.p1Resources.health) / 100,
+        love.graphics.getHeight() - towerHeightPx * PlayerResources.p1Resources.health / 100 - 25,
         towerWidthPx,
-        towerHeightPx * (PlayerResources.p1Resources.health) / 100
+        towerHeightPx * PlayerResources.p1Resources.health / 100
     )
 
     love.graphics.setColor(1, 0, 0)
     love.graphics.rectangle(
         "fill",
         love.graphics.getWidth() - 200 - 50,
-        towerHeightPx * (100 - PlayerResources.p2Resources.health) / 100,
+        love.graphics.getHeight() - towerHeightPx * PlayerResources.p1Resources.health / 100 - 25,
         towerWidthPx,
         towerHeightPx * (PlayerResources.p2Resources.health) / 100
     )
