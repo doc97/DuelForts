@@ -28,29 +28,46 @@ function screen:onEnter()
 
 end
 
-local function renderCard(x, y)
+local function renderCard(card, x, y)
+    love.graphics.setColor(0.5, 0.5, 0.5)
     love.graphics.rectangle("fill", x, y, cardWidthPx, cardHeightPx)
+
+    love.graphics.setColor(0, 0, 0)
+    love.graphics.rectangle("line", x, y, cardWidthPx, cardHeightPx)
+    love.graphics.line(x, y + cardHeightPx / 10, x + cardWidthPx, y + cardHeightPx / 10)
+    love.graphics.line(x, y + cardHeightPx / 2, x + cardWidthPx, y + cardHeightPx / 2)
+
+    love.graphics.printf(card.name, x, y + cardHeightPx / 50, cardWidthPx, "center")
 end
 
 local function renderCards()
-    love.graphics.setColor(0.5, 0.5, 0.5)
-
+    local hand = {
+        { name="Card #1" },
+        { name="Card #2" },
+        { name="Card #3" },
+        { name="Card #4" },
+        { name="Card #5" }
+    }
     local hW = love.graphics.getWidth() / 2
     local hH = love.graphics.getHeight() / 2
+    local idx = 1
     if cardHand % 2 == 1 then
-        renderCard(hW - cardWidthPx / 2, love.graphics.getHeight() / 2 - cardHeightPx - cardSpacePx)
+        renderCard(hand[idx], hW - cardWidthPx / 2, love.graphics.getHeight() / 2 - cardHeightPx - cardSpacePx)
+        idx = idx + 1
 
         if cardHand - 1 > 2 then
-            renderCard(hW - cardWidthPx / 2 - cardSpacePx - cardWidthPx, hH - cardHeightPx - cardSpacePx)
-            renderCard(hW + cardWidthPx / 2 + cardSpacePx, hH - cardHeightPx - cardSpacePx)
+            renderCard(hand[idx], hW - cardWidthPx / 2 - cardSpacePx - cardWidthPx, hH - cardHeightPx - cardSpacePx)
+            renderCard(hand[idx + 1], hW + cardWidthPx / 2 + cardSpacePx, hH - cardHeightPx - cardSpacePx)
+            idx = idx + 2
         end
     else
-        renderCard(hW - cardSpacePx / 2 - cardWidthPx, hH - cardHeightPx - cardSpacePx)
-        renderCard(hW + cardSpacePx / 2, hH / 2 - cardHeightPx - cardSpacePx)
+        renderCard(hand[idx], hW - cardSpacePx / 2 - cardWidthPx, hH - cardHeightPx - cardSpacePx)
+        renderCard(hand[idx + 1], hW + cardSpacePx / 2, hH / 2 - cardHeightPx - cardSpacePx)
+        idx = idx + 2
     end
 
-    renderCard(love.graphics.getWidth() / 2 - cardSpacePx / 2 - cardWidthPx, love.graphics.getHeight() / 2 + cardSpacePx)
-    renderCard(love.graphics.getWidth() / 2 + cardSpacePx / 2, love.graphics.getHeight() / 2 + cardSpacePx)
+    renderCard(hand[idx], love.graphics.getWidth() / 2 - cardSpacePx / 2 - cardWidthPx, love.graphics.getHeight() / 2 + cardSpacePx)
+    renderCard(hand[idx + 1], love.graphics.getWidth() / 2 + cardSpacePx / 2, love.graphics.getHeight() / 2 + cardSpacePx, cardWidthPx)
 end
 
 local function renderTowers()
