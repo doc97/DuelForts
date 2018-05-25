@@ -14,6 +14,7 @@ local function cardDrawPlayer1()
     for i = 1, PlayerResources.p1Resources.handsize do
         local card = Pool[ math.random( #Pool )]
         table.insert( p1Hand, { base = card.base, index = card.index } )
+    end
 end
 
 local function cardDrawPlayer2()
