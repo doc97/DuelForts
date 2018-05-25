@@ -3,7 +3,8 @@ require "screens"
 function love.load()
     love.window.setTitle("Duel Forts")
     love.window.setMode(0, 0, { fullscreen = true, borderless = true })
-
+    math.randomseed(os.time())
+    math.random() math.random() math.random()
     CurrentScreen = Screens["mainmenu"]
     CurrentScreen:onEnter()
 end

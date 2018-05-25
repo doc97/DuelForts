@@ -9,6 +9,21 @@ local cardHeightPx = 300
 local cardSpacePx = 25
 local cardHand = 3
 
+local function cardDrawPlayer1()
+    p1Hand = {}
+    for i = 1, PlayerResources.p1Resources.handsize do
+        local card = Pool[ math.random( #Pool )]
+        table.insert( p1Hand, { base = card.base, index = card.index } )
+end
+
+local function cardDrawPlayer2()
+    p2Hand = {}
+    for i = 1, PlayerResources.p1Resources.handsize do
+        local card = Pool[ math.random( #Pool )]
+        table.insert( p2Hand, { base = card.base, index = card.index } )
+    end
+end
+
 function screen:onEnter()
 
 end
@@ -79,5 +94,6 @@ function screen:keypressed(key)
         Screens:setScreen("mainmenu")
     end
 end
+
 
 return screen
