@@ -7,7 +7,6 @@ local towerHeightPx = love.graphics.getHeight() - 50
 local cardWidthPx = 200
 local cardHeightPx = 300
 local cardSpacePx = 25
-local cardHand = 3
 
 local function cardDrawPlayer1()
     p1Hand = {}
@@ -23,6 +22,55 @@ local function cardDrawPlayer2()
         local card = Pool[ math.random( #Pool )]
         table.insert( p2Hand, { base = card.base, index = card.index } )
     end
+end
+
+function screen:onEnter()
+
+end
+
+local function renderCard(x, y)
+    love.graphics.rectangle("fill", x, y, cardWidthPx, cardHeightPx)
+end
+
+local function renderCards()
+    love.graphics.setColor(0.5, 0.5, 0.5)
+
+    local hW = love.graphics.getWidth() / 2
+    local hH = love.graphics.getHeight() / 2
+    if cardHand % 2 == 1 then
+        renderCard(hW - cardWidthPx / 2, love.graphics.getHeight() / 2 - cardHeightPx - cardSpacePx)
+
+        if cardHand - 1 > 2 then
+            renderCard(hW - cardWidthPx / 2 - cardSpacePx - cardWidthPx, hH - cardHeightPx - cardSpacePx)
+            renderCard(hW + cardWidthPx / 2 + cardSpacePx, hH - cardHeightPx - cardSpacePx)
+        end
+    else
+        renderCard(hW - cardSpacePx / 2 - cardWidthPx, hH - cardHeightPx - cardSpacePx)
+        renderCard(hW + cardSpacePx / 2, hH / 2 - cardHeightPx - cardSpacePx)
+    end
+
+    renderCard(love.graphics.getWidth() / 2 - cardSpacePx / 2 - cardWidthPx, love.graphics.getHeight() / 2 + cardSpacePx)
+    renderCard(love.graphics.getWidth() / 2 + cardSpacePx / 2, love.graphics.getHeight() / 2 + cardSpacePx)
+end
+
+local function renderTowers()
+    love.graphics.setColor(0, 0, 1)
+    love.graphics.rectangle(
+        "fill",
+        50,
+        towerHeightPx * (100 - PlayerResources.p1Resources.health) / 100,
+        towerWidthPx,
+        towerHeightPx * (PlayerResources.p1Resources.health) / 100
+    )
+
+    love.graphics.setColor(1, 0, 0)
+    love.graphics.rectangle(
+        "fill",
+        love.graphics.getWidth() - 200 - 50,
+        towerHeightPx * (100 - PlayerResources.p2Resources.health) / 100,
+        towerWidthPx,
+        towerHeightPx * (PlayerResources.p2Resources.health) / 100
+    )
 end
 
 function screen:onEnter()
@@ -46,48 +94,8 @@ function screen:draw()
     love.graphics.setColor(1, 1, 1)
     love.graphics.printf("Card pool size: "..PlayerResources.p1Resources.health, 0, love.graphics.getHeight() - 50, love.graphics.getWidth(), "center")
 
-    -- Draw towers
-    love.graphics.setColor(0, 0, 1)
-    love.graphics.rectangle(
-        "fill",
-        50,
-        towerHeightPx * (100 - PlayerResources.p1Resources.health) / 100,
-        towerWidthPx,
-        towerHeightPx * (PlayerResources.p1Resources.health) / 100
-    )
-
-    love.graphics.setColor(1, 0, 0)
-    love.graphics.rectangle(
-        "fill",
-        love.graphics.getWidth() - 200 - 50,
-        towerHeightPx * (100 - PlayerResources.p2Resources.health) / 100,
-        towerWidthPx,
-        towerHeightPx * (PlayerResources.p2Resources.health) / 100
-    )
-
-    -- Draw cards
-    love.graphics.setColor(0.5, 0.5, 0.5)
-
-    local hW = love.graphics.getWidth() / 2
-    local hH = love.graphics.getHeight() / 2
-    if cardHand % 2 == 1 then
-        screen:renderCard(hW - cardWidthPx / 2, love.graphics.getHeight() / 2 - cardHeightPx - cardSpacePx)
-
-        if cardHand - 1 > 2 then
-            screen:renderCard(hW - cardWidthPx / 2 - cardSpacePx - cardWidthPx, hH - cardHeightPx - cardSpacePx)
-            screen:renderCard(hW + cardWidthPx / 2 + cardSpacePx, hH - cardHeightPx - cardSpacePx)
-        end
-    else
-        screen:renderCard(hW - cardSpacePx / 2 - cardWidthPx, hH - cardHeightPx - cardSpacePx)
-        screen:renderCard(hW + cardSpacePx / 2, hH / 2 - cardHeightPx - cardSpacePx)
-    end
-
-    screen:renderCard(love.graphics.getWidth() / 2 - cardSpacePx / 2 - cardWidthPx, love.graphics.getHeight() / 2 + cardSpacePx)
-    screen:renderCard(love.graphics.getWidth() / 2 + cardSpacePx / 2, love.graphics.getHeight() / 2 + cardSpacePx)
-end
-
-function screen:renderCard(x, y)
-    love.graphics.rectangle("fill", x, y, cardWidthPx, cardHeightPx)
+    renderTowers()
+    renderCards()
 end
 
 function screen:keypressed(key)
