@@ -14,7 +14,7 @@
 |4      |3       |Pranks    |8         |
 |6      |7       |Sabotage  |5         |
 |10     |15      |Raid      |3         |
-|23     |23      |Alexandrian Effect|2 |
+|15     |23      |Alexandrian Effect|2 |
 
 ## Resource Cards Effect is (Card Draw / Money) 
 | Cost  | Effect | Name     | Quantity |

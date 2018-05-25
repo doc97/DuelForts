@@ -1,11 +1,12 @@
 require "cards"
 
 local data = {
-    ["build"]       = { 5, 4, 3, 2, 1 },
-    ["resource"]    = { 4, 3, 2, 1 },
-    ["destroy"]     = { 4, 3, 2, 1 },
-    ["shield"]      = { 3, 2, 1 },
-    ["special"]     = { 2, 1 }
+    ["build"]       = { 10, 6, 4, 2},
+    ["resource"]    = { 8, 4},
+    ["destroy"]     = { 8, 5, 3, 2},
+    ["shield"]      = { 8, 5, 3},
+    ["special"]     = { 3, 3, 2},
+    ["permanents"]  = { 7, 3, 10, 4}
 }
 
 Pool = {}   
