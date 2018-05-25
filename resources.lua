@@ -1,5 +1,5 @@
 -- Health, Money
-local resources = {
+PlayerResources = {
     
     ["p1Resources"]={
     ["health"]=35, ["money"]=3, ["shield"]=0, 
@@ -12,5 +12,3 @@ local resources = {
     }
     
 }
-
-return resources
