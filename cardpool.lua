@@ -46,4 +46,11 @@ for i = 1, #Cards.special do
     end
 end
 
+-- Permanent cards
+for i = 1, #Cards.permanents do
+    for j = 1, data.permanents[i] do
+        Pool[#Pool + 1] = { ["base"] = "special", ["index"] = i}
+    end
+end
+
 Pool[#Pool + 1] = { ["base"] = "discard", ["index"] = 1 }
