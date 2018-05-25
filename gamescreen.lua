@@ -51,62 +51,27 @@ function screen:draw()
 
     -- Draw cards
     love.graphics.setColor(0.5, 0.5, 0.5)
+
+    local hW = love.graphics.getWidth() / 2
+    local hH = love.graphics.getHeight() / 2
     if cardHand % 2 == 1 then
-        love.graphics.rectangle(
-            "fill",
-            love.graphics.getWidth() / 2 - cardWidthPx / 2,
-            love.graphics.getHeight() / 2 - cardHeightPx - cardSpacePx,
-            cardWidthPx,
-            cardHeightPx
-        )
+        screen:renderCard(hW - cardWidthPx / 2, love.graphics.getHeight() / 2 - cardHeightPx - cardSpacePx)
 
         if cardHand - 1 > 2 then
-            love.graphics.rectangle(
-                "fill",
-                love.graphics.getWidth() / 2 - cardWidthPx / 2 - cardSpacePx - cardWidthPx,
-                love.graphics.getHeight() / 2 - cardHeightPx - cardSpacePx,
-                cardWidthPx,
-                cardHeightPx
-            )
-            love.graphics.rectangle(
-                "fill",
-                love.graphics.getWidth() / 2 + cardWidthPx / 2 + cardSpacePx,
-                love.graphics.getHeight() / 2 - cardHeightPx - cardSpacePx,
-                cardWidthPx,
-                cardHeightPx
-            )
+            screen:renderCard(hW - cardWidthPx / 2 - cardSpacePx - cardWidthPx, hH - cardHeightPx - cardSpacePx)
+            screen:renderCard(hW + cardWidthPx / 2 + cardSpacePx, hH - cardHeightPx - cardSpacePx)
         end
     else
-        love.graphics.rectangle(
-            "fill",
-            love.graphics.getWidth() / 2 - cardSpacePx / 2 - cardWidthPx,
-            love.graphics.getHeight() / 2 - cardHeightPx - cardSpacePx,
-            cardWidthPx,
-            cardHeightPx
-        )
-        love.graphics.rectangle(
-            "fill",
-            love.graphics.getWidth() / 2 + cardSpacePx / 2,
-            love.graphics.getHeight() / 2 - cardHeightPx - cardSpacePx,
-            cardWidthPx,
-            cardHeightPx
-        )
+        screen:renderCard(hW - cardSpacePx / 2 - cardWidthPx, hH - cardHeightPx - cardSpacePx)
+        screen:renderCard(hW + cardSpacePx / 2, hH / 2 - cardHeightPx - cardSpacePx)
     end
 
-    love.graphics.rectangle(
-        "fill",
-        love.graphics.getWidth() / 2 - cardSpacePx / 2 - cardWidthPx,
-        love.graphics.getHeight() / 2 + cardSpacePx,
-        cardWidthPx,
-        cardHeightPx
-    )
-    love.graphics.rectangle(
-        "fill",
-        love.graphics.getWidth() / 2 + cardSpacePx / 2,
-        love.graphics.getHeight() / 2 + cardSpacePx,
-        cardWidthPx,
-        cardHeightPx
-    )
+    screen:renderCard(love.graphics.getWidth() / 2 - cardSpacePx / 2 - cardWidthPx, love.graphics.getHeight() / 2 + cardSpacePx)
+    screen:renderCard(love.graphics.getWidth() / 2 + cardSpacePx / 2, love.graphics.getHeight() / 2 + cardSpacePx)
+end
+
+function screen:renderCard(x, y)
+    love.graphics.rectangle("fill", x, y, cardWidthPx, cardHeightPx)
 end
 
 function screen:keypressed(key)
