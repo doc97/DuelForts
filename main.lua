@@ -2,6 +2,7 @@ require "screens"
 
 function love.load()
     love.window.setTitle("Duel Forts")
+    love.window.setMode(0, 0, { fullscreen = true, borderless = true })
 
     CurrentScreen = Screens["mainmenu"]
     CurrentScreen:onEnter()
