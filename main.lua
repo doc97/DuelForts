@@ -15,6 +15,10 @@ function love.draw()
     CurrentScreen:draw()
 end
 
+function love.keypressed(key)
+    CurrentScreen:keypressed(key)
+end
+
 function love.quit()
     CurrentScreen:onExit()
 end
