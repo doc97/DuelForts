@@ -4,6 +4,10 @@ require "cardpool"
 local screen = {}
 local Fonts = Fonts
 
+MainMenuMusic:pause()
+GameMusic:setLooping(true)
+GameMusic:play()
+
 local logic = assert(love.filesystem.load("logic.lua"))()
 
 local towerWidthPx = 200
