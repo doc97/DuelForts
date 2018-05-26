@@ -38,14 +38,14 @@ Cards = {
             ["cost"] = 3,
             ["target"] = "money",
             ["qty"] = 1,
-            ["effectText"] = "Gain 1 extra card and 2 extra resources next turn."
+            ["effectText"] = "Gain 2 extra resources next turn."
         },
         {
             ["name"] = "Fusion",
             ["cost"] = 6,
             ["target"] = "money",
             ["qty"] = 3,
-            ["effectText"] = "Gain 2 extra cards and 3 extra resources next turn."
+            ["effectText"] = "Gain 3 extra resources next turn."
         }
     },
 
