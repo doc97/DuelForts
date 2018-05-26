@@ -19,9 +19,13 @@ function screen:update(dt)
 end
 
 function screen:draw()
+    love.graphics.setFont(Fonts["goudy-96"])
+    love.graphics.setColor(255, 255, 255)
+    love.graphics.printf("DUEL FORTS", 0, 100, love.graphics.getWidth(), "center")
+
     love.graphics.setFont(Fonts["goudy-64"])
     love.graphics.setColor(255, 255, 255)
-    love.graphics.printf("Press Enter to begin", 0, 300, love.graphics.getWidth(), "center")
+    love.graphics.printf("Press Enter to begin", 0, 400, love.graphics.getWidth(), "center")
 end
 
 function screen:keypressed(key)

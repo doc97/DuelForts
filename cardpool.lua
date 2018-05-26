@@ -5,8 +5,8 @@ local data = {
     ["resource"]    = { 8, 4 },
     ["destroy"]     = { 8, 5, 3, 2 },
     ["shield"]      = { 8, 5, 3 },
-    ["special"]     = { 3, 3, 2 },
-    ["permanents"]  = { 7, 3, 10, 4 }
+    ["special"]     = { 3, 3, 0 },
+    ["permanents"]  = { 7, 3, 10, 0 }
 }
 
 Pool = {}   

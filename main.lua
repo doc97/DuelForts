@@ -11,6 +11,8 @@ function love.load()
     Fonts["black-chancery-32"] = love.graphics.newFont("assets/black-chancery.ttf", 32)
     Fonts["black-chancery-48"] = love.graphics.newFont("assets/black-chancery.ttf", 48)
     Fonts["goudy-64"] = love.graphics.newFont("assets/goudy.ttf", 64)
+    Fonts["goudy-96"] = love.graphics.newFont("assets/goudy.ttf", 96)
+    Fonts["Herne-Bold-18"] = love.graphics.newFont("assets/Herne-Regular.otf", 18)
 
     love.window.setTitle("Duel Forts")
     love.window.setMode(0, 0, { fullscreen = true, borderless = true })

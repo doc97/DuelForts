@@ -2,7 +2,7 @@ PlayerResources = {
     
     ["p1Resources"] = {
         ["health"]        = 35,
-        ["money"]         = 3,
+        ["money"]         = 5,
         ["shield"]        = 0,
         ["handsize"]      = 5,
         ["modBuildCost"]  = 0,
@@ -12,7 +12,7 @@ PlayerResources = {
     
     ["p2Resources"] = {
         ["health"]        = 35,
-        ["money"]         = 2,
+        ["money"]         = 4,
         ["shield"]        = 0,
         ["handsize"]      = 5,
         ["modBuildCost"]  = 0,

@@ -142,7 +142,7 @@ Cards = {
             ["name"] = "Builder 'Bobert'",
             ["cost"] = 6,
             ["health"] = 15,
-            ["effectText"] = "Your walls have +5 height"
+            ["effectText"] = "Your walls gains 5 height"
         },
         {
             ["name"] = "Conjurer 'Vinhelm'",

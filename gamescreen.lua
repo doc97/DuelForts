@@ -10,8 +10,12 @@ GameMusic:play()
 
 local logic = assert(love.filesystem.load("logic.lua"))()
 
+local hidden = false
+
+local tower1Tex = nil
+local tower2Tex = nil
 local towerWidthPx = 200
-local towerHeightPx = love.graphics.getHeight() - 50
+local towerHeightPx = 669
 local cardWidthPx = 200
 local cardHeightPx = 300
 local cardSpacePx = 25
@@ -62,15 +66,18 @@ local function renderCard(base, card, x, y)
     love.graphics.line(x + cardHeightPx / 10, y, x + cardHeightPx / 10, y + cardHeightPx / 10)
     love.graphics.line(x, y + cardHeightPx / 2, x + cardWidthPx, y + cardHeightPx / 2)
 
+    love.graphics.setFont(Fonts["black-chancery-18"])
     love.graphics.printf(card and card.name or "???", x + cardHeightPx / 10, y + cardHeightPx / 50, cardWidthPx - cardHeightPx / 10, "center")
     love.graphics.printf(card and card.cost or "?", x, y + cardHeightPx / 40, cardHeightPx / 10, "center")
+
+    love.graphics.setFont(Fonts["Herne-Bold-18"])
     if card.qty ~= nil then
-        love.graphics.printf(card and card.effectText or "??", x, y + cardHeightPx - 95, cardWidthPx, "center")
+        love.graphics.printf(card and card.effectText or "??", x + 5, y + cardHeightPx - 115, cardWidthPx - 10, "center")
     elseif card.health ~= nil then
-        love.graphics.printf(card and card.health or "????", x, y + cardHeightPx - 110, cardWidthPx, "center")
-        love.graphics.printf(card and card.effectText or "?????", x, y + cardHeightPx - 95, cardWidthPx, "center")
+        love.graphics.printf("HP: "..(card and card.health or "????"), x, y + cardHeightPx - 135, cardWidthPx, "center")
+        love.graphics.printf(card and card.effectText or "?????", x + 5, y + cardHeightPx - 115, cardWidthPx - 10, "center")
     elseif card.tag ~= nil then 
-        love.graphics.printf(card and card.effectText or "??????", x, y +cardHeightPx - 95, cardWidthPx, "center")
+        love.graphics.printf(card and card.effectText or "??????", x + 5, y +cardHeightPx - 115, cardWidthPx - 10, "center")
     end
 end
 
@@ -80,7 +87,6 @@ local function renderCards()
     local idx = 1
     local card = nil
     
-    love.graphics.setFont(Fonts["black-chancery-18"])
     local x, y = getBaseXY(true)
     for i = 0, #logic.currentHand - 3 do
         card = Cards[logic.currentHand[idx].base][logic.currentHand[idx].index]
@@ -146,28 +152,21 @@ end
 local function renderTowers()
     local p1Hp = PlayerResources.p1Resources.health
     local p2Hp = PlayerResources.p2Resources.health
-    local t1x = 50
-    local t1y = love.graphics.getHeight() - towerHeightPx * p1Hp / 100 - 25
-    local t2x = love.graphics.getWidth() - 200 - 50
-    local t2y = love.graphics.getHeight() - towerHeightPx * p2Hp / 100 - 25
+    local t1x = 10
+    local t1y = love.graphics.getHeight() - towerHeightPx * math.min(1, p1Hp / 100)
+    local t2x = love.graphics.getWidth() - towerWidthPx - 10
+    local t2y = love.graphics.getHeight() - towerHeightPx * math.min(1, p2Hp / 100)
 
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.draw(tower1Tex, t1x, t1y)
+    love.graphics.draw(tower2Tex, t2x, t2y)
+
+    local wall1Height = logic:getResource("player1", "shield") * 5
+    local wall2Height = logic:getResource("player2", "shield") * 5
     love.graphics.setColor(0, 0, 1)
-    love.graphics.rectangle(
-        "fill",
-        t1x,
-        t1y,
-        towerWidthPx,
-        towerHeightPx * p1Hp / 100
-    )
-
+    love.graphics.rectangle("fill", t1x + towerWidthPx + 20, love.graphics.getHeight() - wall1Height, 15, wall1Height)
     love.graphics.setColor(1, 0, 0)
-    love.graphics.rectangle(
-        "fill",
-        t2x,
-        t2y,
-        towerWidthPx,
-        towerHeightPx * p2Hp / 100
-    )
+    love.graphics.rectangle("fill", t2x - 15 - 20, love.graphics.getHeight() - wall2Height, 15, wall2Height)
 end
 
 function renderStats()
@@ -186,25 +185,28 @@ function renderStats()
     love.graphics.setColor(0, 0, 0)
     love.graphics.printf("HP: "..p1Hp, t1x, y, towerWidthPx, "center")
     love.graphics.printf("Money: "..p1Money, t1x, y + 32, towerWidthPx, "center")
-    love.graphics.printf("Shield: "..p1Shield, t1x, y + 64, towerWidthPx, "center")
+    love.graphics.printf("Wall: "..p1Shield, t1x, y + 64, towerWidthPx, "center")
     local i = 1
     for k, v in pairs(PlayerResources.p1Resources.permanents) do
-        love.graphics.printf(k..": "..v.health.."hp", t1x, y + 64 + i * 20, towerWidthPx, "center")
+        love.graphics.printf(k..": "..v.health.."hp", t1x, y + 64 + i * 32, towerWidthPx, "center")
         i = i + 1
     end
 
     love.graphics.setColor(0, 0, 0)
     love.graphics.printf("HP: "..p2Hp, t2x, y, towerWidthPx, "center")
     love.graphics.printf("Money: "..p2Money, t2x, y + 32, towerWidthPx, "center")
-    love.graphics.printf("Shield: "..p2Shield, t2x, y + 64, towerWidthPx, "center")
+    love.graphics.printf("Wall: "..p2Shield, t2x, y + 64, towerWidthPx, "center")
     i = 1
     for k, v in pairs(PlayerResources.p2Resources.permanents) do
-        love.graphics.printf(k..": "..v.health.."hp", t2x, y + 64 + i * 20, towerWidthPx, "center")
+        love.graphics.printf(k..": "..v.health.."hp", t2x, y + 64 + i * 32, towerWidthPx, "center")
         i = i + 1
     end
 end
 
 function screen:onEnter()
+    tower1Tex = love.graphics.newImage("assets/tower1.png")
+    tower2Tex = love.graphics.newImage("assets/tower2.png")
+
     PlayerResources.p1Resources["handsize"] = 5
     PlayerResources.p2Resources["handsize"] = 5
     logic:cardDrawPlayer1()
@@ -231,8 +233,10 @@ function screen:draw()
 
     renderTowers()
     renderStats()
-    renderCurrentCardIndicator()
-    renderCards()
+    if not hidden then
+        renderCurrentCardIndicator()
+        renderCards()
+    end
 end
 
 function screen:keypressed(key)
@@ -268,6 +272,8 @@ function screen:keypressed(key)
         logic:up()
     elseif key == "down" then
         logic:down()
+    elseif key == "h" then
+        hidden = not hidden
     end
 end
 
