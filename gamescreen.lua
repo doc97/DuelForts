@@ -8,6 +8,7 @@ local cardWidthPx = 200
 local cardHeightPx = 300
 local cardSpacePx = 25
 local currentHand = nil
+local turn = "player1"
 
 local function cardDrawPlayer1()
     currentHand = {}
@@ -25,11 +26,12 @@ local function cardDrawPlayer2()
     end
 end
 
-function switchturns()
-    if turn == player1 then
-        turn = player2
-    elseif turn == player2 then
-        turn = player1
+local function switchTurns()
+    turn = turn == "player1" and "player2" or "player1"
+    if turn == "player1" then
+        cardDrawPlayer1()
+    else
+        cardDrawPlayer2()
     end
 end
 
@@ -42,7 +44,7 @@ local function renderCard(card, x, y)
     love.graphics.line(x + cardHeightPx / 10, y, x + cardHeightPx / 10, y + cardHeightPx / 10)
     love.graphics.line(x, y + cardHeightPx / 2, x + cardWidthPx, y + cardHeightPx / 2)
 
-    love.graphics.printf(card and card.name or "???", x, y + cardHeightPx / 40, cardWidthPx, "center")
+    love.graphics.printf(card and card.name or "???", x + cardHeightPx / 10, y + cardHeightPx / 40, cardWidthPx - cardHeightPx / 10, "center")
     love.graphics.printf(card and card.cost or "?", x, y + cardHeightPx / 40, cardHeightPx / 10, "center")
 end
 
@@ -105,6 +107,7 @@ end
 
 function screen:onEnter()
     cardDrawPlayer1()
+    turn = "player1"
 end
 
 function screen:onExit()
@@ -123,6 +126,7 @@ function screen:draw()
     -- Text status
     love.graphics.setColor(1, 1, 1)
     love.graphics.printf("Card pool size: "..PlayerResources.p1Resources.health, 0, love.graphics.getHeight() - 50, love.graphics.getWidth(), "center")
+    love.graphics.printf("Turn: "..turn, 0, love.graphics.getHeight() - 25, love.graphics.getWidth(), "center")
 
     renderTowers()
     renderCards()
@@ -131,6 +135,8 @@ end
 function screen:keypressed(key)
     if key == "escape" then
         Screens:setScreen("mainmenu")
+    elseif key == "return" then
+        switchTurns()
     end
 end
 
