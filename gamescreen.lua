@@ -4,41 +4,13 @@ require "cardpool"
 local screen = {}
 local Fonts = Fonts
 
+local logic = assert(love.filesystem.load("logic.lua"))()
+
 local towerWidthPx = 200
 local towerHeightPx = love.graphics.getHeight() - 50
 local cardWidthPx = 200
 local cardHeightPx = 300
 local cardSpacePx = 25
-local currentHand = nil
-local turn = "player1"
-local currentCardIndex = 1
-
-local function cardDrawPlayer1()
-    currentCardIndex = 1
-    currentHand = {}
-    for i = 1, PlayerResources.p1Resources.handsize do
-        local card = assert(Pool[ math.random( #Pool )])
-        table.insert( currentHand, { base = card.base, index = card.index } )
-    end
-end
-
-local function cardDrawPlayer2()
-    currentCardIndex = 1
-    currentHand = {}
-    for i = 1, PlayerResources.p2Resources.handsize do
-        local card = assert(Pool[ math.random( #Pool )])
-        table.insert( currentHand, { base = card.base, index = card.index } )
-    end
-end
-
-local function switchTurns()
-    turn = turn == "player1" and "player2" or "player1"
-    if turn == "player1" then
-        cardDrawPlayer1()
-    else
-        cardDrawPlayer2()
-    end
-end
 
 local function getBaseXY(up)
     local hW = love.graphics.getWidth() / 2
@@ -47,10 +19,10 @@ local function getBaseXY(up)
     local y = hH
 
     if up then
-        if #currentHand % 2 == 0 then
-            x = hW + cardSpacePx / 2 - math.floor((#currentHand - 2) / 2) * (cardWidthPx + cardSpacePx)
+        if #logic.currentHand % 2 == 0 then
+            x = hW + cardSpacePx / 2 - math.floor((#logic.currentHand - 2) / 2) * (cardWidthPx + cardSpacePx)
         else
-            x = hW - cardWidthPx / 2 - math.floor((#currentHand - 2) / 2) * (cardWidthPx + cardSpacePx)
+            x = hW - cardWidthPx / 2 - math.floor((#logic.currentHand - 2) / 2) * (cardWidthPx + cardSpacePx)
         end
         y = hH - cardHeightPx - cardSpacePx
     else
@@ -105,58 +77,58 @@ local function renderCards()
     local card = nil
     
     local x, y = getBaseXY(true)
-    for i = 0, #currentHand - 3 do
-        card = Cards[currentHand[idx].base][currentHand[idx].index]
-        renderCard(currentHand[idx].base, card, x + i * (cardWidthPx + cardSpacePx), y)
+    for i = 0, #logic.currentHand - 3 do
+        card = Cards[logic.currentHand[idx].base][logic.currentHand[idx].index]
+        renderCard(logic.currentHand[idx].base, card, x + i * (cardWidthPx + cardSpacePx), y)
         idx = idx + 1
     end
 
     x, y = getBaseXY(false)
     for i = 0, 1 do
-        card = Cards[currentHand[idx].base][currentHand[idx].index]
-        renderCard(currentHand[idx].base, card, x + i * (cardWidthPx + cardSpacePx), y)
+        card = Cards[logic.currentHand[idx].base][logic.currentHand[idx].index]
+        renderCard(logic.currentHand[idx].base, card, x + i * (cardWidthPx + cardSpacePx), y)
         idx = idx + 1
     end
 end
 
 local function renderCurrentCardIndicator()
     local x, y = 0, 0
-    if #currentHand == 5 then
-        if currentCardIndex < 4 then
+    if #logic.currentHand == 5 then
+        if logic.currentCardIndex < 4 then
             x, y = getBaseXY(true)
-            if currentCardIndex == 1 then
+            if logic.currentCardIndex == 1 then
                 x = x + cardWidthPx + cardSpacePx
-            elseif currentCardIndex == 3 then
+            elseif logic.currentCardIndex == 3 then
                 x = x + 2 * (cardWidthPx + cardSpacePx)
             end
         else
             x, y = getBaseXY(false)
-            if currentCardIndex == 5 then
+            if logic.currentCardIndex == 5 then
                 x = x + cardWidthPx + cardSpacePx
             end
         end
     end
 
-    if #currentHand == 4 then
-        if currentCardIndex < 3 then
+    if #logic.currentHand == 4 then
+        if logic.currentCardIndex < 3 then
             x, y = getBaseXY(true)
-            if currentCardIndex == 1 then
+            if logic.currentCardIndex == 1 then
                 x = x + cardWidthPx + cardSpacePx
             end
         else
             x, y = getBaseXY(false)
-            if currentCardIndex == 4 then
+            if logic.currentCardIndex == 4 then
                 x = x + cardWidthPx + cardSpacePx
             end
         end
     end
 
-    if #currentHand == 3 then
-        if currentCardIndex < 2 then
+    if #logic.currentHand == 3 then
+        if logic.currentCardIndex < 2 then
             x, y = getBaseXY(true)
         else
             x, y = getBaseXY(false)
-            if currentCardIndex == 3 then
+            if logic.currentCardIndex == 3 then
                 x = x + cardWidthPx + cardSpacePx
             end
         end
@@ -190,63 +162,11 @@ end
 -- Card layout
 -- 2  1  3
 --  4   5
-local function left()
-    if #currentHand == 5 then
-        if currentCardIndex == 1 then currentCardIndex = 2 end
-        if currentCardIndex == 3 then currentCardIndex = 1 end
-        if currentCardIndex == 5 then currentCardIndex = 4 end
-    elseif #currentHand == 4 then
-        if currentCardIndex == 1 then currentCardIndex = 2 end
-        if currentCardIndex == 4 then currentCardIndex = 3 end
-    elseif #currentHand == 3 then
-        if currentCardIndex == 3 then currentCardIndex = 2 end
-    end
-end
-
-local function right()
-    if #currentHand == 5 then
-        if currentCardIndex == 1 then currentCardIndex = 3 end
-        if currentCardIndex == 2 then currentCardIndex = 1 end
-        if currentCardIndex == 4 then currentCardIndex = 5 end
-    elseif #currentHand == 4 then
-        if currentCardIndex == 2 then currentCardIndex = 1 end
-        if currentCardIndex == 3 then currentCardIndex = 4 end
-    elseif #currentHand == 3 then
-        if currentCardIndex == 2 then currentCardIndex = 3 end
-    end
-end
-
-local function up()
-    if #currentHand == 5 then
-        if currentCardIndex == 4 then currentCardIndex = 1 end
-        if currentCardIndex == 5 then currentCardIndex = 3 end
-    elseif #currentHand == 4 then
-        if currentCardIndex == 3 then currentCardIndex = 2 end
-        if currentCardIndex == 4 then currentCardIndex = 1 end
-    elseif #currentHand == 3 then
-        if currentCardIndex == 2 then currentCardIndex = 1 end
-        if currentCardIndex == 3 then currentCardIndex = 1 end
-    end
-end
-
-local function down()
-    if #currentHand == 5 then
-        if currentCardIndex == 1 then currentCardIndex = 5 end
-        if currentCardIndex == 2 then currentCardIndex = 4 end
-        if currentCardIndex == 3 then currentCardIndex = 5 end
-    elseif #currentHand == 4 then
-        if currentCardIndex == 2 then currentCardIndex = 3 end
-        if currentCardIndex == 1 then currentCardIndex = 4 end
-    elseif #currentHand == 3 then
-        if currentCardIndex == 1 then currentCardIndex = 3 end
-    end
-end
-
 function screen:onEnter()
     PlayerResources.p1Resources["handsize"] = 5
     PlayerResources.p2Resources["handsize"] = 3
-    cardDrawPlayer1()
-    turn = "player1"
+    logic:cardDrawPlayer1()
+    logic.turn = "player1"
 end
 
 function screen:onExit()
@@ -267,8 +187,8 @@ function screen:draw()
     -- Text status
     love.graphics.setColor(1, 1, 1)
     love.graphics.printf("Card pool size: "..PlayerResources.p1Resources.health, 0, love.graphics.getHeight() - 50, love.graphics.getWidth(), "center")
-    love.graphics.printf("Turn: "..turn, 0, love.graphics.getHeight() - 25, love.graphics.getWidth(), "center")
-    love.graphics.printf("Index: "..currentCardIndex, 0, 25, love.graphics.getWidth(), "center")
+    love.graphics.printf("Turn: "..logic.turn, 0, love.graphics.getHeight() - 25, love.graphics.getWidth(), "center")
+    love.graphics.printf("Index: "..logic.currentCardIndex, 0, 25, love.graphics.getWidth(), "center")
 
     renderTowers()
     renderCurrentCardIndicator()
@@ -279,15 +199,15 @@ function screen:keypressed(key)
     if key == "escape" then
         Screens:setScreen("mainmenu")
     elseif key == "return" then
-        switchTurns()
+        logic:switchTurns()
     elseif key == "left" then
-        left()
+        logic:left()
     elseif key == "right" then
-        right()
+        logic:right()
     elseif key == "up" then
-        up()
+        logic:up()
     elseif key == "down" then
-        down()
+        logic:down()
     end
 end
 
