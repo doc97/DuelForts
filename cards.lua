@@ -5,7 +5,7 @@ Cards = {
             ["name"] = "All-Nighter",
             ["cost"] = 3,
             ["target"] = "health",
-            ["qty"] = 5
+            ["qty"] = 5,
             ["effectText"] = "Build up your wall by 5 levels." 
         },
         {
