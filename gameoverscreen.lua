@@ -16,11 +16,11 @@ end
 function screen:draw()
     love.graphics.setFont(Fonts["goudy-64"])
     love.graphics.setColor(255, 255, 255)
-    love.graphics.printf("Winner: "..(Game.winner and Game.winner or "No winner").."\n\n\nPress any key to continue", 0, 300, love.graphics.getWidth(), "center")
+    love.graphics.printf("Winner: "..(Game.winner and Game.winner or "No winner").."\n\n\nPress any key to exit", 0, 300, love.graphics.getWidth(), "center")
 end
 
 function screen:keypressed(key)
-    Screens:setScreen("mainmenu")
+    love.event.quit()
 end
 
 return screen
