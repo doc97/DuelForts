@@ -112,14 +112,14 @@ Cards = {
             ["name"] = "Espionage",
             ["cost"] = 4,
             ["target"] = "handsize",
-            ["qty"] = 1,
+            ["qty"] = -1,
             ["effectText"] = "Your opponents draws 1 less card next turn."
         },
         {
             ["name"] = "Propaganda",
             ["cost"] = 6,
             ["target"] = "handsize",
-            ["qty"] = 2,
+            ["qty"] = -2,
             ["effectText"] = "Your opponents draws 2 less cards next turn."
         }
     },
