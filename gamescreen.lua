@@ -36,9 +36,25 @@ local function switchTurns()
         cardDrawPlayer2()
     end
 end
-
-local function renderCard(card, x, y)
+-- Render Cards
+local function renderCard(base, card, x, y)
     love.graphics.setColor(0.5, 0.5, 0.5)
+    if base == "build" then
+        love.graphics.setColor(0.05, 0.98, 0.02) -- Green
+    elseif base == "resource" then
+        love.graphics.setColor(0.16, 0.25, 0.89) -- Blue
+    elseif base == "damage" then 
+        love.graphics.setColor(0.91, 0.01, 0.01) -- Red
+    elseif base == "special" then
+        love.graphics.setColor(0.63, 0.01, 0.68) -- Purple
+    elseif base == "discard" then
+        love.graphics.setColor(0.40, 0.65, 0.01) -- Dark Green
+    elseif base == "permanents" then
+        love.graphics.setColor(0.89, 0.93, 0.17) -- Yellow
+    elseif base == "shield" then
+        love.graphics.setColor(0.62, 0.88, 0.19) -- Greenish Yellow
+    end
+
     love.graphics.rectangle("fill", x, y, cardWidthPx, cardHeightPx)
     love.graphics.setColor(0, 0, 0)
     love.graphics.rectangle("line", x, y, cardWidthPx, cardHeightPx)
@@ -48,6 +64,11 @@ local function renderCard(card, x, y)
 
     love.graphics.printf(card and card.name or "???", x + cardHeightPx / 10, y + cardHeightPx / 40, cardWidthPx - cardHeightPx / 10, "center")
     love.graphics.printf(card and card.cost or "?", x, y + cardHeightPx / 40, cardHeightPx / 10, "center")
+    if card.qty ~= nil then
+        love.graphics.printf(card and card.qty or "??", x, y + cardHeightPx - 95, cardWidthPx, "center")
+    elseif card.health ~= 0 then
+        love.graphics.printf(card and card.health or "????", x, y + cardHeightPx - 95, cardWidthPx, "center")
+    end
 end
 
 local function renderCards()
@@ -57,34 +78,34 @@ local function renderCards()
     local card = nil
     if #currentHand % 2 == 1 then
         card = Cards[currentHand[idx].base][currentHand[idx].index]
-        renderCard(card, hW - cardWidthPx / 2, love.graphics.getHeight() / 2 - cardHeightPx - cardSpacePx)
+        renderCard(currentHand[idx].base, card, hW - cardWidthPx / 2, love.graphics.getHeight() / 2 - cardHeightPx - cardSpacePx)
         idx = idx + 1
 
         if #currentHand - 1 > 2 then
             card = Cards[currentHand[idx].base][currentHand[idx].index]
-            renderCard(card, hW - cardWidthPx / 2 - cardSpacePx - cardWidthPx, hH - cardHeightPx - cardSpacePx)
+            renderCard(currentHand[idx].base, card, hW - cardWidthPx / 2 - cardSpacePx - cardWidthPx, hH - cardHeightPx - cardSpacePx)
             idx = idx + 1
 
             card = Cards[currentHand[idx].base][currentHand[idx].index]
-            renderCard(card, hW + cardWidthPx / 2 + cardSpacePx, hH - cardHeightPx - cardSpacePx)
+            renderCard(currentHand[idx].base, card, hW + cardWidthPx / 2 + cardSpacePx, hH - cardHeightPx - cardSpacePx)
             idx = idx + 1
         end
     else
         card = Cards[currentHand[idx].base][currentHand[idx].index]
-        renderCard(card, hW - cardSpacePx / 2 - cardWidthPx, hH - cardHeightPx - cardSpacePx)
+        renderCard(currentHand[idx].base, card, hW - cardSpacePx / 2 - cardWidthPx, hH - cardHeightPx - cardSpacePx)
         idx = idx + 1
 
         card = Cards[currentHand[idx].base][currentHand[idx].index]
-        renderCard(card, hW + cardSpacePx / 2, hH / 2 - cardHeightPx - cardSpacePx)
+        renderCard(currentHand[idx].base, card, hW + cardSpacePx / 2, hH / 2 - cardHeightPx - cardSpacePx)
         idx = idx + 1
     end
 
     card = Cards[currentHand[idx].base][currentHand[idx].index]
-    renderCard(card, love.graphics.getWidth() / 2 - cardSpacePx / 2 - cardWidthPx, love.graphics.getHeight() / 2 + cardSpacePx)
+    renderCard(currentHand[idx].base, card, love.graphics.getWidth() / 2 - cardSpacePx / 2 - cardWidthPx, love.graphics.getHeight() / 2 + cardSpacePx)
     idx = idx + 1
 
     card = Cards[currentHand[idx].base][currentHand[idx].index]
-    renderCard(card, love.graphics.getWidth() / 2 + cardSpacePx / 2, love.graphics.getHeight() / 2 + cardSpacePx, cardWidthPx)
+    renderCard(currentHand[idx].base, card, love.graphics.getWidth() / 2 + cardSpacePx / 2, love.graphics.getHeight() / 2 + cardSpacePx, cardWidthPx)
 end
 
 local function renderTowers()
