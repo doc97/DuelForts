@@ -83,6 +83,7 @@ function logic:activateCard(base, card)
     else
         logic:modResource(logic.turn, card.target, card.qty)
     end
+    logic:modResource(logic.turn, "money", -card.cost)
 end
 
 function logic:destroy(player, qty)
