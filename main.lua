@@ -1,4 +1,5 @@
 Fonts = {}
+Game = {}
 
 require "screens"
 

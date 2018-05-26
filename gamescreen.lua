@@ -227,6 +227,14 @@ function screen:keypressed(key)
         if logic:getResource(logic.turn, "money") >= card.cost then
             logic:activateCard(handCard.base, card)
             logic:switchTurns()
+
+            if logic:getResource("player1", "health") >= 100 or logic:getResource("player2", "health") <= 0 then
+                Game.winner = "Player 1 (Dan)"
+                Screen:setScreen("gameover")
+            elseif logic:getResource("player2", "health") >= 100 or logic:getResource("player1", "health") <= 0 then
+                Game.winner = "Player 2 (Oskari)"
+                Screen:setScreen("gameover")
+            end
         end
     elseif key == "space" then
         logic:modResource(logic.turn, "money", 2)

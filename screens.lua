@@ -1,6 +1,7 @@
 Screens = {
     ["mainmenu"] = assert(love.filesystem.load("mainmenuscreen.lua"))(),
     ["game"] = assert(love.filesystem.load("gamescreen.lua"))(),
+    ["gameover"] = assert(love.filesystem.load("gameoverscreen.lua"))(),
     ["help"] = assert(love.filesystem.load("helpscreen.lua"))()
 }
 
