@@ -150,15 +150,16 @@ Cards = {
     ["special"] = {
         {
             ["name"] = "Armageddon",
-            ["cost"] = 9,
+            ["cost"] = 9
         },
         {
             ["name"] = "Pox",
-            ["cost"] = 13,
+            ["cost"] = 13
         },
         {
             ["name"] = "Worker's Strike",
-            ["cost"] = 8,
+            ["cost"] = 8
         }
     }
 }
+
