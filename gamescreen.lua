@@ -28,10 +28,10 @@ local function getBaseXY(up)
         else
             x = hW - cardWidthPx / 2 - math.floor((#logic.currentHand - 2) / 2) * (cardWidthPx + cardSpacePx)
         end
-        y = hH - cardHeightPx - cardSpacePx
+        y = hH - cardHeightPx - cardSpacePx + 40
     else
         x = hW + cardSpacePx / 2 - (cardWidthPx + cardSpacePx)
-        y = hH + cardSpacePx
+        y = hH + cardSpacePx + 40
     end
 
     return x, y
@@ -221,17 +221,16 @@ function screen:update(dt)
 end
 
 function screen:draw()
-    love.graphics.setFont(Fonts["black-chancery-18"])
-
     -- Background
     love.graphics.setColor(0.5, 0.5, 0.8)
     love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
 
     -- Text status
-    love.graphics.setColor(1, 1, 1)
-    love.graphics.printf("Card pool size: "..PlayerResources.p1Resources.health, 0, love.graphics.getHeight() - 50, love.graphics.getWidth(), "center")
-    love.graphics.printf("Turn: "..logic.turn, 0, love.graphics.getHeight() - 25, love.graphics.getWidth(), "center")
-    love.graphics.printf("Index: "..logic.currentCardIndex, 0, 25, love.graphics.getWidth(), "center")
+    love.graphics.setColor(0, 0, 0)
+    love.graphics.setFont(Fonts["black-chancery-48"])
+    love.graphics.printf("Turn: "..(logic.turn == "player1" and "Player 1 (Dan)" or "Player 2 (Oskari)"), 0, 20, love.graphics.getWidth(), "center")
+
+    love.graphics.setFont(Fonts["black-chancery-18"])
 
     renderTowers()
     renderStats()
