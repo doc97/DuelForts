@@ -6,7 +6,7 @@ function love.load()
     math.randomseed(os.time())
     math.random() math.random() math.random()
 
-    Fonts["matrix-bold-18"] = love.graphics.newFont("assets/matrix-bold.ttf", 18)
+    Fonts["black-chancery-18"] = love.graphics.newFont("assets/black-chancery.ttf", 18)
     Fonts["goudy-64"] = love.graphics.newFont("assets/goudy.ttf", 64)
 
     love.window.setTitle("Duel Forts")

@@ -39,7 +39,7 @@
 | Cost  | Effect | Name     | Quantity | Health |
 |-------|--------|----------|----------|---------|
 |5      |Your "Build" cards cost 1 less|Architect "Archibald"|7|12|
-|8      |When you deal damage, deal twice as much but you take the original amount.| Explosions Expert "Vinnie"|3|7|
+|8      |When you deal damage, deal twice as much but you take the original amount.| Bomb Expert "Vinnie"|3|7|
 |6      |Your walls have +5 health|Builder "Bobert"|10|15|
 |7      |You are guaranteed a special card your next draw.|Conjurer "Vinhelm"|4|6|
 ## Specials

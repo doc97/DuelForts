@@ -129,7 +129,7 @@ Cards = {
             ["health"] = 12
         },
         {
-            ["name"] = "Explosions Expert 'Vinnie'",
+            ["name"] = "Bomb Expert 'Vinnie'",
             ["cost"] = 8,
             ["health"] = 7
         },

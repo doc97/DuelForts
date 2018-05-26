@@ -86,7 +86,7 @@ local function renderCard(base, card, x, y)
     love.graphics.line(x + cardHeightPx / 10, y, x + cardHeightPx / 10, y + cardHeightPx / 10)
     love.graphics.line(x, y + cardHeightPx / 2, x + cardWidthPx, y + cardHeightPx / 2)
 
-    love.graphics.printf(card and card.name or "???", x + cardHeightPx / 10, y + cardHeightPx / 40, cardWidthPx - cardHeightPx / 10, "center")
+    love.graphics.printf(card and card.name or "???", x + cardHeightPx / 10, y + cardHeightPx / 50, cardWidthPx - cardHeightPx / 10, "center")
     love.graphics.printf(card and card.cost or "?", x, y + cardHeightPx / 40, cardHeightPx / 10, "center")
     if card.qty ~= nil then
         love.graphics.printf(card and card.qty or "??", x, y + cardHeightPx - 95, cardWidthPx, "center")
@@ -255,7 +255,7 @@ function screen:update(dt)
 end
 
 function screen:draw()
-    love.graphics.setFont(Fonts["matrix-bold-18"])
+    love.graphics.setFont(Fonts["black-chancery-18"])
 
     -- Background
     love.graphics.setColor(0.5, 0.5, 0.8)
