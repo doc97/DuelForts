@@ -65,8 +65,7 @@ function logic:activateCard(base, card)
     elseif base == "destroy"  then
         if logic.turn == "player1" then logic:destroy("player2", math.abs(card.qty))
         elseif logic.turn == "player2" then logic:destroy("player1", math.abs(card.qty)) end
-    elseif base == "discard" then
-        --[[ if card.name == "Armageddon" then ]] -- Destroy all permanents
+        -- if card.name == "Armageddon" then ]] -- Destroy all permanents
         if card.name == "Pox" then   -- multiply by 2/3 then ceil and add hand size destruction
             local varHealth = PlayerResources.p1Resources.health - math.floor(PlayerResources.p1Resources.health / 3)
             local varShield = PlayerResources.p1Resources.shield - math.floor(PlayerResources.p1Resources.shield / 3)
