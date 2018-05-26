@@ -1,6 +1,7 @@
 Screens = {
     ["mainmenu"] = assert(love.filesystem.load("mainmenuscreen.lua"))(),
-    ["game"] = assert(love.filesystem.load("gamescreen.lua"))()
+    ["game"] = assert(love.filesystem.load("gamescreen.lua"))(),
+    ["help"] = assert(love.filesystem.load("helpscreen.lua"))()
 }
 
 CurrentScreen = nil
