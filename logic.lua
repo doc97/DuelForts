@@ -67,13 +67,16 @@ function logic:activateCard(base, card)
         elseif logic.turn == "player2" then logic:destroy("player1", math.abs(card.qty)) end
     elseif base == "discard" then
         --[[ if card.name == "Armageddon" then ]] -- Destroy all permanents
-        if card.name == "Pox" then          
-            local varHealth = PlayerResources.p1Resources.health = PlayerResources.p1Resources.health - math.floor(PlayerResources.p1Resources.health / 3)
+        if card.name == "Pox" then   -- multiply by 2/3 then ceil and add hand size destruction
+            local varHealth = PlayerResources.p1Resources.health - math.floor(PlayerResources.p1Resources.health / 3)
+            local varShield = PlayerResources.p1Resources.shield - math.floor(PlayerResources.p1Resources.shield / 3)
             logic:modResource("player1", "health", varHealth)
-            PlayerResources.p1Resources.shield = PlayerResources.p1Resources.shield - math.floor(PlayerResources.p1Resources.shield / 3)
+            logic:modResource("player1", "shield", varShield)
             
-            PlayerResources.p2Resources.health = PlayerResources.p2Resources.health - math.floor(PlayerResources.p2Resources.health / 3)
-            PlayerResources.p2Resources.shield = PlayerResources.p2Resources.shield - math.floor(PlayerResources.p2Resources.shield / 3)
+            local varHealth = PlayerResources.p2Resources.health - math.floor(PlayerResources.p2Resources.health / 3)
+            local varShield = PlayerResources.p2Resources.shield - math.floor(PlayerResources.p2Resources.shield / 3)
+            logic:modResource("player2", "health", varHealth)
+            logic:modResource("player2", "shield", varShield)
         end
         --[[ if card.name == "Worker's Strike" then ]] -- Halt all build for 2 turns
     else

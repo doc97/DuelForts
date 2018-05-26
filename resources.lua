@@ -10,7 +10,7 @@ PlayerResources = {
     
     ["p2Resources"] = {
         ["health"]     = 35, 
-        ["money"]      = 4, 
+        ["money"]      = 2,
         ["shield"]     = 0,
         ["handsize"]   = 5,
         ["permanents"] = {} 
