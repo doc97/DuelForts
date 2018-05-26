@@ -21,16 +21,14 @@ end
 function screen:draw()
     love.graphics.setFont(Fonts["goudy-64"])
     love.graphics.setColor(255, 255, 255)
-    love.graphics.printf("Press Enter to start\n \n \n Press H to go to help", 0, 300, love.graphics.getWidth(), "center")
+    love.graphics.printf("Press Enter to begin", 0, 300, love.graphics.getWidth(), "center")
 end
 
 function screen:keypressed(key)
     if key == "return" then
-        Screens:setScreen("game")
+        Screens:setScreen("help")
     elseif key == "escape" then
         love.event.quit()
-    elseif key == "h" then
-        Screens:setScreen("help")
     end
 end
 
