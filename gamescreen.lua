@@ -145,7 +145,7 @@ local function renderCurrentCardIndicator()
         end
     end
 
-    love.graphics.setColor(0.5, 0.5, 0)
+    love.graphics.setColor(1, 0.843, 0)
     love.graphics.rectangle("fill", x - 5, y - 5, cardWidthPx + 10, cardHeightPx + 10)
 end
 
@@ -186,7 +186,7 @@ function renderStats()
     love.graphics.printf("HP: "..p1Hp, t1x, y, towerWidthPx, "center")
     love.graphics.printf("Money: "..p1Money, t1x, y + 32, towerWidthPx, "center")
     love.graphics.printf("Wall: "..p1Shield, t1x, y + 64, towerWidthPx, "center")
-    local i = 1
+    local i = 2
     for k, v in pairs(PlayerResources.p1Resources.permanents) do
         love.graphics.printf(k..": "..v.health.."hp", t1x, y + 64 + i * 32, towerWidthPx, "center")
         i = i + 1
@@ -196,9 +196,9 @@ function renderStats()
     love.graphics.printf("HP: "..p2Hp, t2x, y, towerWidthPx, "center")
     love.graphics.printf("Money: "..p2Money, t2x, y + 32, towerWidthPx, "center")
     love.graphics.printf("Wall: "..p2Shield, t2x, y + 64, towerWidthPx, "center")
-    i = 1
+    i = 2
     for k, v in pairs(PlayerResources.p2Resources.permanents) do
-        love.graphics.printf(k..": "..v.health.."hp", t2x, y + 64 + i * 32, towerWidthPx, "center")
+        love.graphics.printf(k..": "..v.health.."hp", t2x, y + 64 + i * 32, towerWidth, "center")
         i = i + 1
     end
 end
