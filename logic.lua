@@ -10,6 +10,7 @@ function logic:cardDrawPlayer1()
         local card = assert(Pool[ math.random( #Pool )])
         table.insert(logic.currentHand, { base = card.base, index = card.index })
     end
+    logic:setResource("player1", "handsize", 5)
 end
 
 function logic:cardDrawPlayer2()
@@ -19,6 +20,7 @@ function logic:cardDrawPlayer2()
         local card = assert(Pool[ math.random( #Pool )])
         table.insert(logic.currentHand, { base = card.base, index = card.index })
     end
+    logic:setResource("player2", "handsize", 5)
 end
 
 function logic:switchTurns()
