@@ -6,28 +6,28 @@ Cards = {
             ["cost"] = 3,
             ["target"] = "health",
             ["qty"] = 5,
-            ["effectText"] = "Build up your wall by 5 levels." 
+            ["effectText"] = "Build up your tower by 5 levels." 
         },
         {
             ["name"] = "Full Week",
-            ["cost"] = 5,
+            ["cost"] = 6,
             ["target"] = "health",
             ["qty"] = 10,
-            ["effectText"] = "Build up your wall by 10 levels."
+            ["effectText"] = "Build up your tower by 10 levels."
         },
         {
             ["name"] = "Big Project",
             ["cost"] = 8,
             ["target"] = "health",
             ["qty"] = 15,
-            ["effectText"] = "Build up your wall by 15 levels."
+            ["effectText"] = "Build up your tower by 15 levels."
         },
         {
             ["name"] = "Egyptian Effort",
-            ["cost"] = 20,
+            ["cost"] = 14,
             ["target"] = "health",
             ["qty"] = 20,
-            ["effectText"] = "Build up your wall by 20 levels."
+            ["effectText"] = "Build up your tower by 20 levels."
         },
     },
 
@@ -35,17 +35,17 @@ Cards = {
     ["resource"] = {
         {
             ["name"] = "Acquirence",
-            ["cost"] = 3,
+            ["cost"] = 2,
             ["target"] = "money",
-            ["qty"] = 1,
-            ["effectText"] = "Gain 2 extra resources next turn."
+            ["qty"] = 5,
+            ["effectText"] = "Gain 5 extra resources next turn."
         },
         {
             ["name"] = "Fusion",
-            ["cost"] = 6,
+            ["cost"] = 4,
             ["target"] = "money",
-            ["qty"] = 3,
-            ["effectText"] = "Gain 3 extra resources next turn."
+            ["qty"] = 7,
+            ["effectText"] = "Gain 7 extra resources next turn."
         }
     },
 
@@ -56,28 +56,28 @@ Cards = {
             ["cost"] = 4,
             ["target"] = "health",
             ["qty"] = -3,
-            ["effectText"] = "Destroy your opponents wall by 3 levels."
+            ["effectText"] = "Destroy your opponents tower by 3 levels."
         },
         {
             ["name"] = "Sabotage",
             ["cost"] = 6,
             ["target"] = "health",
             ["qty"] = -7,
-            ["effectText"] = "Destroy your opponents wall by 7 levels."
+            ["effectText"] = "Destroy your opponents tower by 7 levels."
         },
         {
             ["name"] = "Raid",
             ["cost"] = 10,
             ["target"] = "health",
             ["qty"] = -15,
-            ["effectText"] = "Destroy your opponents wall by 15 levels."
+            ["effectText"] = "Destroy your opponents tower by 15 levels."
         },
         {
             ["name"] = "Alexandrian effect",
             ["cost"] = 15,
             ["target"] = "health",
             ["qty"] = -23,
-            ["effectText"] = "Destroy your opponents wall by 23 levels."
+            ["effectText"] = "Destroy your opponents tower by 23 levels."
         }
     },
 

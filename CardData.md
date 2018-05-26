@@ -4,9 +4,9 @@
 | Cost  | Effect | Name     | Quantity |
 |-------|--------|----------|----------|
 |3      |5       |AllNighter|10        |
-|5      |10      |FullWeek  |6         |
+|6      |10      |FullWeek  |6         |
 |8      |15      |BigProject|4         |
-|11     |20      |Egyptian Effort|2    |
+|14     |20      |Egyptian Effort|2    |
 
 ## Damage Cards 3, 7, 15, 23
 | Cost  | Effect | Name     | Quantity |
@@ -16,11 +16,11 @@
 |10     |15      |Raid      |3         |
 |15     |23      |Alexandrian Effect|2 |
 
-## Resource Cards Effect is (Card Draw / Money) 
+## Resource Cards Effect is
 | Cost  | Effect | Name     | Quantity |
 |-------|--------|----------|----------|
-|3      |1/2     |Acquirence|8         |
-|6      |2/4     |Fusion    |4         |
+|2      |5       |Acquirence|8         |
+|4      |7       |Fusion    |4         |
 
 ## Shield Cards 3, 5, 8
 | Cost  | Effect | Name     | Quantity |
