@@ -141,6 +141,10 @@ end
 local function renderTowers()
     local p1Hp = PlayerResources.p1Resources.health
     local p2Hp = PlayerResources.p2Resources.health
+    local p1Money = PlayerResources.p1Resources.money
+    local p2Money = PlayerResources.p2Resources.money
+    local p1Shield = PlayerResources.p1Resources.shield
+    local p2Shield = PlayerResources.p2Resources.shield
     local t1x = 50
     local t1y = love.graphics.getHeight() - towerHeightPx * p1Hp / 100 - 25
     local t2x = love.graphics.getWidth() - 200 - 50
@@ -155,7 +159,9 @@ local function renderTowers()
         towerHeightPx * p1Hp / 100
     )
     love.graphics.setColor(0, 0, 0)
-    love.graphics.printf(p1Hp, t1x, t1y, towerWidthPx, "center")
+    love.graphics.printf("HP: "..p1Hp, t1x, t1y, towerWidthPx, "center")
+    love.graphics.printf("Money: "..p1Money, t1x, t1y + 20, towerWidthPx, "center")
+    love.graphics.printf("Shield: "..p1Shield, t1x, t1y + 40, towerWidthPx, "center")
 
     love.graphics.setColor(1, 0, 0)
     love.graphics.rectangle(
@@ -166,7 +172,9 @@ local function renderTowers()
         towerHeightPx * p2Hp / 100
     )
     love.graphics.setColor(0, 0, 0)
-    love.graphics.printf(p2Hp, t2x, t2y, towerWidthPx, "center")
+    love.graphics.printf("HP: "..p2Hp, t2x, t2y, towerWidthPx, "center")
+    love.graphics.printf("Money: "..p2Money, t2x, t2y + 20, towerWidthPx, "center")
+    love.graphics.printf("Shield: "..p2Shield, t2x, t2y + 40, towerWidthPx, "center")
 end
 
 
@@ -212,7 +220,12 @@ function screen:keypressed(key)
     elseif key == "return" then
         local handCard = logic.currentHand[logic.currentCardIndex]
         local card = Cards[handCard.base][handCard.index]
-        logic:activateCard(handCard.base, card)
+        if logic:getResource(logic.turn, "money") >= card.cost then
+            logic:activateCard(handCard.base, card)
+            logic:switchTurns()
+        end
+    elseif key == "space" then
+        logic:modResource(logic.turn, "money", 2)
         logic:switchTurns()
     elseif key == "left" then
         logic:left()

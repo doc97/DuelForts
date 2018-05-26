@@ -25,9 +25,11 @@ function logic:switchTurns()
     if logic.turn == "player1" then
         logic.turn = "player2"
         logic:cardDrawPlayer2()
+        logic:modResource(logic.turn, "money", 2)
     else
         logic.turn = "player1"
         logic:cardDrawPlayer1()
+        logic:modResource(logic.turn, "money", 2)
     end
 end
 
@@ -41,14 +43,53 @@ function logic:modResource(target, res, qty)
     end
 end
 
+function logic:setResource(target, res, qty)
+    if target == "player1" then
+        PlayerResources.p1Resources[res] = qty
+    else
+        PlayerResources.p2Resources[res] = qty
+    end
+end
+
+function logic:getResource(target, res)
+    if target == "player1" then
+        return PlayerResources.p1Resources[res]
+    else
+        return PlayerResources.p2Resources[res]
+    end
+end
+
 function logic:activateCard(base, card)
     if base == "special" then
     elseif base == "permanents" then
-    elseif base == "destroy" or base == "discard" then
+    elseif base == "destroy"  then
+        if logic.turn == "player1" then logic:destroy("player2", math.abs(card.qty))
+        elseif logic.turn == "player2" then logic:destroy("player1", math.abs(card.qty)) end
+    elseif base == "discard" then
         if logic.turn == "player1" then logic:modResource("player2", card.target, card.qty) end
         if logic.turn == "player2" then logic:modResource("player1", card.target, card.qty) end
     else
         logic:modResource(logic.turn, card.target, card.qty)
+    end
+end
+
+function logic:destroy(player, qty)
+    local qtyLeft = qty
+    local shield = logic:getResource(player, "shield")
+
+    if shield > 0 then
+        if shield >= qty then
+            qtyLeft = 0
+            shield = shield - qty
+        else
+            qtyLeft = qtyLeft - shield
+            shield = 0
+        end
+        logic:setResource(player, "shield", shield)
+    end
+
+    if qtyLeft > 0 then
+        logic:modResource(player, "health", -qtyLeft)
     end
 end
 
