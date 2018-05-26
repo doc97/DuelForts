@@ -1,7 +1,7 @@
 local screen = {}
+local Fonts = Fonts
 
 function screen:onEnter()
-
 end
 
 function screen:onExit()
@@ -13,6 +13,7 @@ function screen:update(dt)
 end
 
 function screen:draw()
+    love.graphics.setFont(Fonts["goudy-64"])
     love.graphics.setColor(255, 255, 255)
     love.graphics.printf("Press Enter to start", 0, 300, love.graphics.getWidth(), "center")
 end

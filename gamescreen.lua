@@ -2,6 +2,8 @@ require "resources"
 require "cardpool"
 
 local screen = {}
+local Fonts = Fonts
+
 local towerWidthPx = 200
 local towerHeightPx = love.graphics.getHeight() - 50
 local cardWidthPx = 200
@@ -119,6 +121,8 @@ function screen:update(dt)
 end
 
 function screen:draw()
+    love.graphics.setFont(Fonts["matrix-bold-18"])
+
     -- Background
     love.graphics.setColor(0.5, 0.5, 0.8)
     love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), love.graphics.getHeight())

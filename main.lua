@@ -1,10 +1,17 @@
+Fonts = {}
+
 require "screens"
 
 function love.load()
-    love.window.setTitle("Duel Forts")
-    love.window.setMode(0, 0, { fullscreen = true, borderless = true })
     math.randomseed(os.time())
     math.random() math.random() math.random()
+
+    Fonts["matrix-bold-18"] = love.graphics.newFont("assets/matrix-bold.ttf", 18)
+    Fonts["goudy-64"] = love.graphics.newFont("assets/goudy.ttf", 64)
+
+    love.window.setTitle("Duel Forts")
+    love.window.setMode(0, 0, { fullscreen = true, borderless = true })
+
     CurrentScreen = Screens["mainmenu"]
     CurrentScreen:onEnter()
 end
