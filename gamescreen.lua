@@ -198,7 +198,7 @@ function renderStats()
     love.graphics.printf("Wall: "..p2Shield, t2x, y + 64, towerWidthPx, "center")
     i = 2
     for k, v in pairs(PlayerResources.p2Resources.permanents) do
-        love.graphics.printf(k..": "..v.health.."hp", t2x, y + 64 + i * 32, towerWidth, "center")
+        love.graphics.printf(k..": "..v.health.."hp", t2x, y + 64 + i * 32, towerWidthPx, "center")
         i = i + 1
     end
 end
