@@ -36,6 +36,11 @@ local function switchTurns()
         cardDrawPlayer2()
     end
 end
+
+--[[ function cardPrice(selection)
+    -- Selection is the hand id of the selected card
+    chosenCard = currentHand[selection]
+     ]]
 -- Render Cards
 local function renderCard(base, card, x, y)
     love.graphics.setColor(0.5, 0.5, 0.5)
@@ -43,7 +48,7 @@ local function renderCard(base, card, x, y)
         love.graphics.setColor(0.05, 0.98, 0.02) -- Green
     elseif base == "resource" then
         love.graphics.setColor(0.16, 0.25, 0.89) -- Blue
-    elseif base == "damage" then 
+    elseif base == "destroy" then 
         love.graphics.setColor(0.91, 0.01, 0.01) -- Red
     elseif base == "special" then
         love.graphics.setColor(0.63, 0.01, 0.68) -- Purple
