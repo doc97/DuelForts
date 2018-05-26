@@ -80,6 +80,7 @@ local function renderCards()
     local idx = 1
     local card = nil
     
+    love.graphics.setFont(Fonts["black-chancery-18"])
     local x, y = getBaseXY(true)
     for i = 0, #logic.currentHand - 3 do
         card = Cards[logic.currentHand[idx].base][logic.currentHand[idx].index]
@@ -181,33 +182,31 @@ function renderStats()
     local t2x = love.graphics.getWidth() - 200 - 50
     local y = 40
 
+    love.graphics.setFont(Fonts["black-chancery-32"])
     love.graphics.setColor(0, 0, 0)
     love.graphics.printf("HP: "..p1Hp, t1x, y, towerWidthPx, "center")
-    love.graphics.printf("Money: "..p1Money, t1x, y + 20, towerWidthPx, "center")
-    love.graphics.printf("Shield: "..p1Shield, t1x, y + 40, towerWidthPx, "center")
+    love.graphics.printf("Money: "..p1Money, t1x, y + 32, towerWidthPx, "center")
+    love.graphics.printf("Shield: "..p1Shield, t1x, y + 64, towerWidthPx, "center")
     local i = 1
     for k, v in pairs(PlayerResources.p1Resources.permanents) do
-        love.graphics.printf(k..": "..v.health.."hp", t1x, y + 40 + i * 20, towerWidthPx, "center")
+        love.graphics.printf(k..": "..v.health.."hp", t1x, y + 64 + i * 20, towerWidthPx, "center")
         i = i + 1
     end
 
     love.graphics.setColor(0, 0, 0)
     love.graphics.printf("HP: "..p2Hp, t2x, y, towerWidthPx, "center")
-    love.graphics.printf("Money: "..p2Money, t2x, y + 20, towerWidthPx, "center")
-    love.graphics.printf("Shield: "..p2Shield, t2x, y + 40, towerWidthPx, "center")
+    love.graphics.printf("Money: "..p2Money, t2x, y + 32, towerWidthPx, "center")
+    love.graphics.printf("Shield: "..p2Shield, t2x, y + 64, towerWidthPx, "center")
     i = 1
     for k, v in pairs(PlayerResources.p2Resources.permanents) do
-        love.graphics.printf(k..": "..v.health.."hp", t2x, y + 40 + i * 20, towerWidthPx, "center")
+        love.graphics.printf(k..": "..v.health.."hp", t2x, y + 64 + i * 20, towerWidthPx, "center")
         i = i + 1
     end
 end
 
--- Card layout
--- 2  1  3
---  4   5
 function screen:onEnter()
     PlayerResources.p1Resources["handsize"] = 5
-    PlayerResources.p2Resources["handsize"] = 3
+    PlayerResources.p2Resources["handsize"] = 5
     logic:cardDrawPlayer1()
     logic.turn = "player1"
 end
@@ -229,8 +228,6 @@ function screen:draw()
     love.graphics.setColor(0, 0, 0)
     love.graphics.setFont(Fonts["black-chancery-48"])
     love.graphics.printf("Turn: "..(logic.turn == "player1" and "Player 1 (Dan)" or "Player 2 (Oskari)"), 0, 20, love.graphics.getWidth(), "center")
-
-    love.graphics.setFont(Fonts["black-chancery-18"])
 
     renderTowers()
     renderStats()

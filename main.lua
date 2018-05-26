@@ -8,6 +8,7 @@ function love.load()
     math.random() math.random() math.random()
 
     Fonts["black-chancery-18"] = love.graphics.newFont("assets/black-chancery.ttf", 18)
+    Fonts["black-chancery-32"] = love.graphics.newFont("assets/black-chancery.ttf", 32)
     Fonts["black-chancery-48"] = love.graphics.newFont("assets/black-chancery.ttf", 48)
     Fonts["goudy-64"] = love.graphics.newFont("assets/goudy.ttf", 64)
 
