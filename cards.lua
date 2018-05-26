@@ -4,28 +4,28 @@ Cards = {
         {
             ["name"] = "All-Nighter",
             ["cost"] = 3,
-            ["targetIndex"] = 0,
-            ["qty"] = 5,
+            ["target"] = "health",
+            ["qty"] = 5
             ["effectText"] = "Build up your wall by 5 levels." 
         },
         {
             ["name"] = "Full Week",
             ["cost"] = 5,
-            ["targetIndex"] = 0,
+            ["target"] = "health",
             ["qty"] = 10,
             ["effectText"] = "Build up your wall by 10 levels."
         },
         {
             ["name"] = "Big Project",
             ["cost"] = 8,
-            ["targetIndex"] = 0,
+            ["target"] = "health",
             ["qty"] = 15,
             ["effectText"] = "Build up your wall by 15 levels."
         },
         {
             ["name"] = "Egyptian Effort",
             ["cost"] = 20,
-            ["targetIndex"] = 0,
+            ["target"] = "health",
             ["qty"] = 20,
             ["effectText"] = "Build up your wall by 20 levels."
         },
@@ -36,29 +36,17 @@ Cards = {
         {
             ["name"] = "Acquirence",
             ["cost"] = 3,
-            ["targetIndex"] = 0,
+            ["target"] = "money",
             ["qty"] = 1,
             ["effectText"] = "Gain 1 extra card and 2 extra resources next turn."
         },
         {
             ["name"] = "Fusion",
             ["cost"] = 6,
-            ["targetIndex"] = 0,
+            ["target"] = "money",
             ["qty"] = 3,
             ["effectText"] = "Gain 2 extra cards and 3 extra resources next turn."
         }
-        --[[ {
-            ["name"] = "Collect large",
-            ["cost"] = 0,
-            ["targetIndex"] = 0,
-            ["qty"] = 5
-        },
-        {
-            ["name"] = "Collect massive",
-            ["cost"] = 0,
-            ["targetIndex"] = 0,
-            ["qty"] = 8
-        } ]]
     },
 
     -- Destroy
@@ -66,28 +54,28 @@ Cards = {
         {
             ["name"] = "Pranks",
             ["cost"] = 4,
-            ["targetIndex"] = 0,
+            ["target"] = "health",
             ["qty"] = -3,
             ["effectText"] = "Destroy your opponents wall by 3 levels."
         },
         {
             ["name"] = "Sabotage",
             ["cost"] = 6,
-            ["targetIndex"] = 0,
+            ["target"] = "health",
             ["qty"] = -7,
             ["effectText"] = "Destroy your opponents wall by 7 levels."
         },
         {
             ["name"] = "Raid",
             ["cost"] = 10,
-            ["targetIndex"] = 0,
+            ["target"] = "health",
             ["qty"] = -15,
             ["effectText"] = "Destroy your opponents wall by 15 levels."
         },
         {
             ["name"] = "Alexandrian effect",
             ["cost"] = 15,
-            ["targetIndex"] = 0,
+            ["target"] = "health",
             ["qty"] = -23,
             ["effectText"] = "Destroy your opponents wall by 23 levels."
         }
@@ -98,21 +86,21 @@ Cards = {
         {
             ["name"] = "Barricade",
             ["cost"] = 3,
-            ["targetIndex"] = 0,
+            ["target"] = "shield",
             ["qty"] = 3,
             ["effectText"] = "Raise a wall with a height of 3."
         },
         {
             ["name"] = "Great Wall",
             ["cost"] = 5,
-            ["targetIndex"] = 0,
+            ["target"] = "shield",
             ["qty"] = 5,
             ["effectText"] = "Raise a wall with a height of 5."
         },
         {
             ["name"] = "Hadrian's Wall",
             ["cost"] = 8,
-            ["targetIndex"] = 0,
+            ["target"] = "shield",
             ["qty"] = 8,
             ["effectText"] = "Raise a wall with a height of 8."
         }
@@ -123,14 +111,14 @@ Cards = {
         {
             ["name"] = "Espionage",
             ["cost"] = 4,
-            ["targetIndex"] = 0,
+            ["target"] = "handsize",
             ["qty"] = 1,
             ["effectText"] = "Your opponents draws 1 less card next turn."
         },
         {
             ["name"] = "Propaganda",
             ["cost"] = 6,
-            ["targetIndex"] = 0,
+            ["target"] = "handsize",
             ["qty"] = 2,
             ["effectText"] = "Your opponents draws 2 less cards next turn."
         }

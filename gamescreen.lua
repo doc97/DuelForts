@@ -96,7 +96,7 @@ local function renderCurrentCardIndicator()
     if #logic.currentHand == 5 then
         if logic.currentCardIndex < 4 then
             x, y = getBaseXY(true)
-            if logic.currentCardIndex == 1 then
+            if logic.currentCardIndex == 2 then
                 x = x + cardWidthPx + cardSpacePx
             elseif logic.currentCardIndex == 3 then
                 x = x + 2 * (cardWidthPx + cardSpacePx)
@@ -112,7 +112,7 @@ local function renderCurrentCardIndicator()
     if #logic.currentHand == 4 then
         if logic.currentCardIndex < 3 then
             x, y = getBaseXY(true)
-            if logic.currentCardIndex == 1 then
+            if logic.currentCardIndex == 2 then
                 x = x + cardWidthPx + cardSpacePx
             end
         else
@@ -139,23 +139,34 @@ local function renderCurrentCardIndicator()
 end
 
 local function renderTowers()
+    local p1Hp = PlayerResources.p1Resources.health
+    local p2Hp = PlayerResources.p2Resources.health
+    local t1x = 50
+    local t1y = love.graphics.getHeight() - towerHeightPx * p1Hp / 100 - 25
+    local t2x = love.graphics.getWidth() - 200 - 50
+    local t2y = love.graphics.getHeight() - towerHeightPx * p2Hp / 100 - 25
+
     love.graphics.setColor(0, 0, 1)
     love.graphics.rectangle(
         "fill",
-        50,
-        love.graphics.getHeight() - towerHeightPx * PlayerResources.p1Resources.health / 100 - 25,
+        t1x,
+        t1y,
         towerWidthPx,
-        towerHeightPx * PlayerResources.p1Resources.health / 100
+        towerHeightPx * p1Hp / 100
     )
+    love.graphics.setColor(0, 0, 0)
+    love.graphics.printf(p1Hp, t1x, t1y, towerWidthPx, "center")
 
     love.graphics.setColor(1, 0, 0)
     love.graphics.rectangle(
         "fill",
-        love.graphics.getWidth() - 200 - 50,
-        love.graphics.getHeight() - towerHeightPx * PlayerResources.p1Resources.health / 100 - 25,
+        t2x,
+        t2y,
         towerWidthPx,
-        towerHeightPx * (PlayerResources.p2Resources.health) / 100
+        towerHeightPx * p2Hp / 100
     )
+    love.graphics.setColor(0, 0, 0)
+    love.graphics.printf(p2Hp, t2x, t2y, towerWidthPx, "center")
 end
 
 
@@ -199,6 +210,9 @@ function screen:keypressed(key)
     if key == "escape" then
         Screens:setScreen("mainmenu")
     elseif key == "return" then
+        local handCard = logic.currentHand[logic.currentCardIndex]
+        local card = Cards[handCard.base][handCard.index]
+        logic:activateCard(handCard.base, card)
         logic:switchTurns()
     elseif key == "left" then
         logic:left()

@@ -22,22 +22,44 @@ function logic:cardDrawPlayer2()
 end
 
 function logic:switchTurns()
-    logic.turn = logic.turn == "player1" and "player2" or "player1"
     if logic.turn == "player1" then
-        logic:cardDrawPlayer1()
-    else
+        logic.turn = "player2"
         logic:cardDrawPlayer2()
+    else
+        logic.turn = "player1"
+        logic:cardDrawPlayer1()
+    end
+end
+
+function logic:modResource(target, res, qty)
+    if target == "player1" then
+        local value = PlayerResources.p1Resources[res]
+        PlayerResources.p1Resources[res] = value + qty
+    else
+        local value = PlayerResources.p2Resources[res]
+        PlayerResources.p2Resources[res] = value + qty
+    end
+end
+
+function logic:activateCard(base, card)
+    if base == "special" then
+    elseif base == "permanents" then
+    elseif base == "destroy" or base == "discard" then
+        if logic.turn == "player1" then logic:modResource("player2", card.target, card.qty) end
+        if logic.turn == "player2" then logic:modResource("player1", card.target, card.qty) end
+    else
+        logic:modResource(logic.turn, card.target, card.qty)
     end
 end
 
 function logic:left()
     if #logic.currentHand == 5 then
-        if logic.currentCardIndex == 1 then logic.currentCardIndex = 2 end
-        if logic.currentCardIndex == 3 then logic.currentCardIndex = 1 end
-        if logic.currentCardIndex == 5 then logic.currentCardIndex = 4 end
+        if logic.currentCardIndex == 2 then logic.currentCardIndex = 1
+        elseif logic.currentCardIndex == 3 then logic.currentCardIndex = 2
+        elseif logic.currentCardIndex == 5 then logic.currentCardIndex = 4 end
     elseif #logic.currentHand == 4 then
-        if logic.currentCardIndex == 1 then logic.currentCardIndex = 2 end
-        if logic.currentCardIndex == 4 then logic.currentCardIndex = 3 end
+        if logic.currentCardIndex == 2 then logic.currentCardIndex = 1
+        elseif logic.currentCardIndex == 4 then logic.currentCardIndex = 3 end
     elseif #logic.currentHand == 3 then
         if logic.currentCardIndex == 3 then logic.currentCardIndex = 2 end
     end
@@ -45,12 +67,12 @@ end
 
 function logic:right()
     if #logic.currentHand == 5 then
-        if logic.currentCardIndex == 1 then logic.currentCardIndex = 3 end
-        if logic.currentCardIndex == 2 then logic.currentCardIndex = 1 end
-        if logic.currentCardIndex == 4 then logic.currentCardIndex = 5 end
+        if logic.currentCardIndex == 1 then logic.currentCardIndex = 2
+        elseif logic.currentCardIndex == 2 then logic.currentCardIndex = 3
+        elseif logic.currentCardIndex == 4 then logic.currentCardIndex = 5 end
     elseif #logic.currentHand == 4 then
-        if logic.currentCardIndex == 2 then logic.currentCardIndex = 1 end
-        if logic.currentCardIndex == 3 then logic.currentCardIndex = 4 end
+        if logic.currentCardIndex == 1 then logic.currentCardIndex = 2
+        elseif logic.currentCardIndex == 3 then logic.currentCardIndex = 4 end
     elseif #logic.currentHand == 3 then
         if logic.currentCardIndex == 2 then logic.currentCardIndex = 3 end
     end
@@ -58,30 +80,28 @@ end
 
 function logic:up()
     if #logic.currentHand == 5 then
-        if logic.currentCardIndex == 4 then logic.currentCardIndex = 1 end
-        if logic.currentCardIndex == 5 then logic.currentCardIndex = 3 end
+        if logic.currentCardIndex == 4 then logic.currentCardIndex = 2
+        elseif logic.currentCardIndex == 5 then logic.currentCardIndex = 3 end
     elseif #logic.currentHand == 4 then
-        if logic.currentCardIndex == 3 then logic.currentCardIndex = 2 end
-        if logic.currentCardIndex == 4 then logic.currentCardIndex = 1 end
+        if logic.currentCardIndex == 3 then logic.currentCardIndex = 1
+        elseif logic.currentCardIndex == 4 then logic.currentCardIndex = 2 end
     elseif #logic.currentHand == 3 then
-        if logic.currentCardIndex == 2 then logic.currentCardIndex = 1 end
-        if logic.currentCardIndex == 3 then logic.currentCardIndex = 1 end
+        if logic.currentCardIndex == 2 then logic.currentCardIndex = 1
+        elseif logic.currentCardIndex == 3 then logic.currentCardIndex = 1 end
     end
 end
 
 function logic:down()
     if #logic.currentHand == 5 then
-        if logic.currentCardIndex == 1 then logic.currentCardIndex = 5 end
-        if logic.currentCardIndex == 2 then logic.currentCardIndex = 4 end
-        if logic.currentCardIndex == 3 then logic.currentCardIndex = 5 end
+        if logic.currentCardIndex == 1 then logic.currentCardIndex = 4
+        elseif logic.currentCardIndex == 2 then logic.currentCardIndex = 5
+        elseif logic.currentCardIndex == 3 then logic.currentCardIndex = 5 end
     elseif #logic.currentHand == 4 then
-        if logic.currentCardIndex == 2 then logic.currentCardIndex = 3 end
-        if logic.currentCardIndex == 1 then logic.currentCardIndex = 4 end
+        if logic.currentCardIndex == 1 then logic.currentCardIndex = 3
+        elseif logic.currentCardIndex == 2 then logic.currentCardIndex = 4 end
     elseif #logic.currentHand == 3 then
         if logic.currentCardIndex == 1 then logic.currentCardIndex = 3 end
     end
 end
-
-
 
 return logic
