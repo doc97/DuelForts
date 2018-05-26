@@ -66,8 +66,16 @@ function logic:activateCard(base, card)
         if logic.turn == "player1" then logic:destroy("player2", math.abs(card.qty))
         elseif logic.turn == "player2" then logic:destroy("player1", math.abs(card.qty)) end
     elseif base == "discard" then
-        if logic.turn == "player1" then logic:modResource("player2", card.target, card.qty) end
-        if logic.turn == "player2" then logic:modResource("player1", card.target, card.qty) end
+        --[[ if card.name == "Armageddon" then ]] -- Destroy all permanents
+        if card.name == "Pox" then          
+            local varHealth = PlayerResources.p1Resources.health = PlayerResources.p1Resources.health - math.floor(PlayerResources.p1Resources.health / 3)
+            logic:modResource("player1", "health", varHealth)
+            PlayerResources.p1Resources.shield = PlayerResources.p1Resources.shield - math.floor(PlayerResources.p1Resources.shield / 3)
+            
+            PlayerResources.p2Resources.health = PlayerResources.p2Resources.health - math.floor(PlayerResources.p2Resources.health / 3)
+            PlayerResources.p2Resources.shield = PlayerResources.p2Resources.shield - math.floor(PlayerResources.p2Resources.shield / 3)
+        end
+        --[[ if card.name == "Worker's Strike" then ]] -- Halt all build for 2 turns
     else
         logic:modResource(logic.turn, card.target, card.qty)
     end
