@@ -25,10 +25,17 @@ local function cardDrawPlayer2()
     end
 end
 
+function switchturns()
+    if turn == player1 then
+        turn = player2
+    elseif turn == player2 then
+        turn = player1
+    end
+end
+
 local function renderCard(card, x, y)
     love.graphics.setColor(0.5, 0.5, 0.5)
     love.graphics.rectangle("fill", x, y, cardWidthPx, cardHeightPx)
-
     love.graphics.setColor(0, 0, 0)
     love.graphics.rectangle("line", x, y, cardWidthPx, cardHeightPx)
     love.graphics.line(x, y + cardHeightPx / 10, x + cardWidthPx, y + cardHeightPx / 10)
