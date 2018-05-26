@@ -145,10 +145,6 @@ end
 local function renderTowers()
     local p1Hp = PlayerResources.p1Resources.health
     local p2Hp = PlayerResources.p2Resources.health
-    local p1Money = PlayerResources.p1Resources.money
-    local p2Money = PlayerResources.p2Resources.money
-    local p1Shield = PlayerResources.p1Resources.shield
-    local p2Shield = PlayerResources.p2Resources.shield
     local t1x = 50
     local t1y = love.graphics.getHeight() - towerHeightPx * p1Hp / 100 - 25
     local t2x = love.graphics.getWidth() - 200 - 50
@@ -162,10 +158,6 @@ local function renderTowers()
         towerWidthPx,
         towerHeightPx * p1Hp / 100
     )
-    love.graphics.setColor(0, 0, 0)
-    love.graphics.printf("HP: "..p1Hp, t1x, t1y, towerWidthPx, "center")
-    love.graphics.printf("Money: "..p1Money, t1x, t1y + 20, towerWidthPx, "center")
-    love.graphics.printf("Shield: "..p1Shield, t1x, t1y + 40, towerWidthPx, "center")
 
     love.graphics.setColor(1, 0, 0)
     love.graphics.rectangle(
@@ -175,12 +167,40 @@ local function renderTowers()
         towerWidthPx,
         towerHeightPx * p2Hp / 100
     )
-    love.graphics.setColor(0, 0, 0)
-    love.graphics.printf("HP: "..p2Hp, t2x, t2y, towerWidthPx, "center")
-    love.graphics.printf("Money: "..p2Money, t2x, t2y + 20, towerWidthPx, "center")
-    love.graphics.printf("Shield: "..p2Shield, t2x, t2y + 40, towerWidthPx, "center")
 end
 
+function renderStats()
+    local p1Hp = PlayerResources.p1Resources.health
+    local p2Hp = PlayerResources.p2Resources.health
+    local p1Money = PlayerResources.p1Resources.money
+    local p2Money = PlayerResources.p2Resources.money
+    local p1Shield = PlayerResources.p1Resources.shield
+    local p2Shield = PlayerResources.p2Resources.shield
+
+    local t1x = 50
+    local t2x = love.graphics.getWidth() - 200 - 50
+    local y = 40
+
+    love.graphics.setColor(0, 0, 0)
+    love.graphics.printf("HP: "..p1Hp, t1x, y, towerWidthPx, "center")
+    love.graphics.printf("Money: "..p1Money, t1x, y + 20, towerWidthPx, "center")
+    love.graphics.printf("Shield: "..p1Shield, t1x, y + 40, towerWidthPx, "center")
+    local i = 1
+    for k, v in pairs(PlayerResources.p1Resources.permanents) do
+        love.graphics.printf(k..": "..v.health.."hp", t1x, y + 40 + i * 20, towerWidthPx, "center")
+        i = i + 1
+    end
+
+    love.graphics.setColor(0, 0, 0)
+    love.graphics.printf("HP: "..p2Hp, t2x, y, towerWidthPx, "center")
+    love.graphics.printf("Money: "..p2Money, t2x, y + 20, towerWidthPx, "center")
+    love.graphics.printf("Shield: "..p2Shield, t2x, y + 40, towerWidthPx, "center")
+    i = 1
+    for k, v in pairs(PlayerResources.p2Resources.permanents) do
+        love.graphics.printf(k..": "..v.health.."hp", t2x, y + 40 + i * 20, towerWidthPx, "center")
+        i = i + 1
+    end
+end
 
 -- Card layout
 -- 2  1  3
@@ -214,6 +234,7 @@ function screen:draw()
     love.graphics.printf("Index: "..logic.currentCardIndex, 0, 25, love.graphics.getWidth(), "center")
 
     renderTowers()
+    renderStats()
     renderCurrentCardIndicator()
     renderCards()
 end
@@ -224,16 +245,21 @@ function screen:keypressed(key)
     elseif key == "return" then
         local handCard = logic.currentHand[logic.currentCardIndex]
         local card = Cards[handCard.base][handCard.index]
-        if logic:getResource(logic.turn, "money") >= card.cost then
-            logic:activateCard(handCard.base, card)
+        local cardCost = card.cost
+        if handCard.base == "build" then
+            cardCost = cardCost + logic:getResource(logic.turn, "modBuildCost")
+        end
+
+        if logic:getResource(logic.turn, "money") >= cardCost then
+            logic:activateCard(handCard.base, card, cardCost)
             logic:switchTurns()
 
             if logic:getResource("player1", "health") >= 100 or logic:getResource("player2", "health") <= 0 then
                 Game.winner = "Player 1 (Dan)"
-                Screen:setScreen("gameover")
+                Screens:setScreen("gameover")
             elseif logic:getResource("player2", "health") >= 100 or logic:getResource("player1", "health") <= 0 then
                 Game.winner = "Player 2 (Oskari)"
-                Screen:setScreen("gameover")
+                Screens:setScreen("gameover")
             end
         end
     elseif key == "space" then
