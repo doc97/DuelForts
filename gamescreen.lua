@@ -89,9 +89,12 @@ local function renderCard(base, card, x, y)
     love.graphics.printf(card and card.name or "???", x + cardHeightPx / 10, y + cardHeightPx / 50, cardWidthPx - cardHeightPx / 10, "center")
     love.graphics.printf(card and card.cost or "?", x, y + cardHeightPx / 40, cardHeightPx / 10, "center")
     if card.qty ~= nil then
-        love.graphics.printf(card and card.qty or "??", x, y + cardHeightPx - 95, cardWidthPx, "center")
-    elseif card.health ~= 0 then
-        love.graphics.printf(card and card.health or "????", x, y + cardHeightPx - 95, cardWidthPx, "center")
+        love.graphics.printf(card and card.effectText or "??", x, y + cardHeightPx - 95, cardWidthPx, "center")
+    elseif card.health ~= nil then
+        love.graphics.printf(card and card.health or "????", x, y + cardHeightPx - 110, cardWidthPx, "center")
+        love.graphics.printf(card and card.effectText or "?????", x, y + cardHeightPx - 95, cardWidthPx, "center")
+    elseif card.tag ~= nil then 
+        love.graphics.printf(card and card.effectText or "??????", x, y +cardHeightPx - 95, cardWidthPx, "center")
     end
 end
 
