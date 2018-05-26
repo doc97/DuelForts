@@ -259,7 +259,6 @@ function screen:keypressed(key)
             end
         end
     elseif key == "space" then
-        logic:modResource(logic.turn, "money", 2)
         logic:switchTurns()
     elseif key == "left" then
         logic:left()
