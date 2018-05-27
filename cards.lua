@@ -38,14 +38,14 @@ Cards = {
             ["cost"] = 2,
             ["target"] = "money",
             ["qty"] = 5,
-            ["effectText"] = "Gain 5 extra resources next turn."
+            ["effectText"] = "Gain 5 extra money."
         },
         {
             ["name"] = "Fusion",
             ["cost"] = 4,
             ["target"] = "money",
             ["qty"] = 7,
-            ["effectText"] = "Gain 7 extra resources next turn."
+            ["effectText"] = "Gain 7 extra money."
         }
     },
 
@@ -56,28 +56,28 @@ Cards = {
             ["cost"] = 4,
             ["target"] = "health",
             ["qty"] = 3,
-            ["effectText"] = "Destroy your opponents tower by 3 levels."
+            ["effectText"] = "Attack your opponent for 3 damage."
         },
         {
             ["name"] = "Sabotage",
             ["cost"] = 6,
             ["target"] = "health",
             ["qty"] = 7,
-            ["effectText"] = "Destroy your opponents tower by 7 levels."
+            ["effectText"] = "Attack your opponent for 7 damage."
         },
         {
             ["name"] = "Raid",
             ["cost"] = 10,
             ["target"] = "health",
             ["qty"] = 15,
-            ["effectText"] = "Destroy your opponents tower by 15 levels."
+            ["effectText"] = "Attack your opponent for 15 damage."
         },
         {
             ["name"] = "Alexandrian effect",
             ["cost"] = 15,
             ["target"] = "health",
             ["qty"] = 23,
-            ["effectText"] = "Destroy your opponents tower by 23 levels."
+            ["effectText"] = "Attack your opponent for 23 damage."
         }
     },
 
@@ -88,21 +88,21 @@ Cards = {
             ["cost"] = 3,
             ["target"] = "shield",
             ["qty"] = 3,
-            ["effectText"] = "Raise a wall with a height of 3."
+            ["effectText"] = "Increase wall height by 3."
         },
         {
             ["name"] = "Great Wall",
             ["cost"] = 5,
             ["target"] = "shield",
             ["qty"] = 5,
-            ["effectText"] = "Raise a wall with a height of 5."
+            ["effectText"] = "Increase wall height by 5."
         },
         {
             ["name"] = "Hadrian's Wall",
             ["cost"] = 8,
             ["target"] = "shield",
             ["qty"] = 8,
-            ["effectText"] = "Raise a wall with a height of 8."
+            ["effectText"] = "Increase wall height by 8."
         }
     },
     
@@ -113,14 +113,14 @@ Cards = {
             ["cost"] = 4,
             ["target"] = "handsize",
             ["qty"] = -1,
-            ["effectText"] = "Your opponents draws 1 less card next turn."
+            ["effectText"] = "Your opponent draws 1 less card next turn."
         },
         {
             ["name"] = "Propaganda",
             ["cost"] = 6,
             ["target"] = "handsize",
             ["qty"] = -2,
-            ["effectText"] = "Your opponents draws 2 less cards next turn."
+            ["effectText"] = "Your opponent draws 2 less cards next turn."
         }
     },
 
@@ -142,13 +142,13 @@ Cards = {
             ["name"] = "Builder 'Bobert'",
             ["cost"] = 6,
             ["health"] = 15,
-            ["effectText"] = "Your walls gains 5 height"
+            ["effectText"] = "Doubles the effect of 'Wall' cards"
         },
         {
             ["name"] = "Conjurer 'Vinhelm'",
             ["health"] = 6,
             ["cost"] = 7,
-            ["effectText"] = "You are guaranteed a special card in your next draw."
+            ["effectText"] = "You are guaranteed a special card every turn."
         }
     },
     -- Remove permanents
@@ -158,19 +158,19 @@ Cards = {
         {
             ["name"] = "Armageddon",
             ["cost"] = 9,
-            ["effectText"] = "Destory ALL permanents.",
+            ["effectText"] = "Destroy all permanents.",
             ["tag"] = "special"
         },
         {
             ["name"] = "Pox",
             ["cost"] = 13,
-            ["effectText"] = "Reduce all resources by 1/3. (Tower levels, wall sizes, number of permanents, and next draws.)",
+            ["effectText"] = "Reduce all resources by 1/3. Tower levels, wall heights, next hand size (one turn).",
             ["tag"] = "special"
         },
         {
             ["name"] = "Worker's Strike",
             ["cost"] = 8,
-            ["effectText"] = "Halt all building for 2 turns.",
+            ["effectText"] = "Halt all building (tower and wall) for 2 turns.",
             ["tag"] = "special"
         }
     }
