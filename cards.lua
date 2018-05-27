@@ -55,28 +55,28 @@ Cards = {
             ["name"] = "Pranks",
             ["cost"] = 4,
             ["target"] = "health",
-            ["qty"] = -3,
+            ["qty"] = 3,
             ["effectText"] = "Destroy your opponents tower by 3 levels."
         },
         {
             ["name"] = "Sabotage",
             ["cost"] = 6,
             ["target"] = "health",
-            ["qty"] = -7,
+            ["qty"] = 7,
             ["effectText"] = "Destroy your opponents tower by 7 levels."
         },
         {
             ["name"] = "Raid",
             ["cost"] = 10,
             ["target"] = "health",
-            ["qty"] = -15,
+            ["qty"] = 15,
             ["effectText"] = "Destroy your opponents tower by 15 levels."
         },
         {
             ["name"] = "Alexandrian effect",
             ["cost"] = 15,
             ["target"] = "health",
-            ["qty"] = -23,
+            ["qty"] = 23,
             ["effectText"] = "Destroy your opponents tower by 23 levels."
         }
     },
