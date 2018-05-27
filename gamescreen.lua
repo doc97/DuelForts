@@ -10,8 +10,6 @@ GameMusic:play()
 
 local logic = assert(love.filesystem.load("logic.lua"))()
 
-local hidden = false
-
 local tower1Tex = nil
 local tower2Tex = nil
 local towerWidthPx = 200
@@ -32,10 +30,10 @@ local function getBaseXY(up)
         else
             x = hW - cardWidthPx / 2 - math.floor((#logic.currentHand - 2) / 2) * (cardWidthPx + cardSpacePx)
         end
-        y = hH - cardHeightPx - cardSpacePx + 40
+        y = hH - cardHeightPx - cardSpacePx + 20
     else
         x = hW + cardSpacePx / 2 - (cardWidthPx + cardSpacePx)
-        y = hH + cardSpacePx + 40
+        y = hH + 20
     end
 
     return x, y
@@ -43,20 +41,29 @@ end
 
 local function renderCard(base, card, x, y)
     love.graphics.setColor(0.5, 0.5, 0.5)
+    local text = "???"
+
     if base == "build" then
         love.graphics.setColor(0.05, 0.98, 0.02) -- Green
+        text = "Build\n\n"..(card and card.effectText or "???")
     elseif base == "resource" then
         love.graphics.setColor(0.16, 0.25, 0.89) -- Blue
+        text = "Resource\n\n"..(card and card.effectText or "???")
     elseif base == "destroy" then 
         love.graphics.setColor(0.91, 0.01, 0.01) -- Red
+        text = "Attack\n\n"..(card and card.effectText or "???")
     elseif base == "special" then
         love.graphics.setColor(0.63, 0.01, 0.68) -- Purple
+        text = "Special\n\n"..(card and card.effectText or "???")
     elseif base == "discard" then
         love.graphics.setColor(0.40, 0.65, 0.01) -- Dark Green
+        text = "Discard\n\n"..(card and card.effectText or "???")
     elseif base == "permanents" then
         love.graphics.setColor(0.89, 0.93, 0.17) -- Yellow
+        text = "Permanent ("..(card and card.health or "??").."hp)\n\n"..(card and card.effectText or "???")
     elseif base == "shield" then
         love.graphics.setColor(0.62, 0.88, 0.19) -- Greenish Yellow
+        text = "Wall\n\n"..(card and card.effectText or "???")
     end
 
     love.graphics.rectangle("fill", x, y, cardWidthPx, cardHeightPx)
@@ -70,15 +77,8 @@ local function renderCard(base, card, x, y)
     love.graphics.printf(card and card.name or "???", x + cardHeightPx / 10, y + cardHeightPx / 50, cardWidthPx - cardHeightPx / 10, "center")
     love.graphics.printf(card and card.cost or "?", x, y + cardHeightPx / 40, cardHeightPx / 10, "center")
 
-    love.graphics.setFont(Fonts["Herne-Bold-18"])
-    if card.qty ~= nil then
-        love.graphics.printf(card and card.effectText or "??", x + 5, y + cardHeightPx - 115, cardWidthPx - 10, "center")
-    elseif card.health ~= nil then
-        love.graphics.printf("HP: "..(card and card.health or "????"), x, y + cardHeightPx - 135, cardWidthPx, "center")
-        love.graphics.printf(card and card.effectText or "?????", x + 5, y + cardHeightPx - 115, cardWidthPx - 10, "center")
-    elseif card.tag ~= nil then 
-        love.graphics.printf(card and card.effectText or "??????", x + 5, y +cardHeightPx - 115, cardWidthPx - 10, "center")
-    end
+    love.graphics.setFont(Fonts["black-chancery-18"])
+    love.graphics.printf(text, x + 5, y + cardHeightPx - 135, cardWidthPx - 10, "center")
 end
 
 local function renderCards()
@@ -177,30 +177,36 @@ function renderStats()
     local p1Shield = PlayerResources.p1Resources.shield
     local p2Shield = PlayerResources.p2Resources.shield
 
-    local t1x = 50
-    local t2x = love.graphics.getWidth() - 200 - 50
+    local p1Stats = "Player 1\n---\n".."HP: "..p1Hp.."\nMoney: "..p1Money.."\nWall: "..p1Shield.."\n"
+    for k, v in pairs(PlayerResources.p1Resources.permanents) do
+        p1Stats = p1Stats.."\n"..k..": "..v.health.."hp"
+    end
+
+    local p2Stats = "Player 2\n---\n".."HP: "..p2Hp.."\nMoney: "..p2Money.."\nWall: "..p2Shield.."\n"
+    for k, v in pairs(PlayerResources.p2Resources.permanents) do
+        p2Stats = p2Stats.."\n"..k..": "..v.health.."hp"
+    end
+
+    local x = 50
     local y = 40
 
-    love.graphics.setFont(Fonts["black-chancery-32"])
+    love.graphics.setFont(Fonts["black-chancery-24"])
     love.graphics.setColor(0, 0, 0)
-    love.graphics.printf("HP: "..p1Hp, t1x, y, towerWidthPx, "center")
-    love.graphics.printf("Money: "..p1Money, t1x, y + 32, towerWidthPx, "center")
-    love.graphics.printf("Wall: "..p1Shield, t1x, y + 64, towerWidthPx, "center")
-    local i = 2
-    for k, v in pairs(PlayerResources.p1Resources.permanents) do
-        love.graphics.printf(k..": "..v.health.."hp", t1x, y + 64 + i * 32, towerWidthPx, "center")
-        i = i + 1
+    love.graphics.printf(p1Stats, x, y, love.graphics.getWidth(), "left")
+    love.graphics.printf(p2Stats, x, y, love.graphics.getWidth() - 2 * x, "right")
+end
+
+local function renderUI()
+    love.graphics.setColor(0, 0, 0)
+    love.graphics.setFont(Fonts["goudy-48"])
+    if logic.turn == "player1" then
+        love.graphics.printf("Turn: "..("Player 1 (Dan)"), 0, 20, love.graphics.getWidth(), "center")
+    else
+        love.graphics.printf("Turn: "..("Player 2 (Oskari)"), 0, 20, love.graphics.getWidth(), "center")
     end
 
-    love.graphics.setColor(0, 0, 0)
-    love.graphics.printf("HP: "..p2Hp, t2x, y, towerWidthPx, "center")
-    love.graphics.printf("Money: "..p2Money, t2x, y + 32, towerWidthPx, "center")
-    love.graphics.printf("Wall: "..p2Shield, t2x, y + 64, towerWidthPx, "center")
-    i = 2
-    for k, v in pairs(PlayerResources.p2Resources.permanents) do
-        love.graphics.printf(k..": "..v.health.."hp", t2x, y + 64 + i * 32, towerWidthPx, "center")
-        i = i + 1
-    end
+    love.graphics.setFont(Fonts["goudy-24"])
+    love.graphics.printf("(Press 'Space' to skip your turn)", 0, love.graphics.getHeight() - 40, love.graphics.getWidth(), "center")
 end
 
 function screen:onEnter()
@@ -226,17 +232,11 @@ function screen:draw()
     love.graphics.setColor(0.5, 0.5, 0.8)
     love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
 
-    -- Text status
-    love.graphics.setColor(0, 0, 0)
-    love.graphics.setFont(Fonts["black-chancery-48"])
-    love.graphics.printf("Turn: "..(logic.turn == "player1" and "Player 1 (Dan)" or "Player 2 (Oskari)"), 0, 20, love.graphics.getWidth(), "center")
-
     renderTowers()
     renderStats()
-    if not hidden then
-        renderCurrentCardIndicator()
-        renderCards()
-    end
+    renderCurrentCardIndicator()
+    renderCards()
+    renderUI()
 end
 
 function screen:keypressed(key)
@@ -272,8 +272,6 @@ function screen:keypressed(key)
         logic:up()
     elseif key == "down" then
         logic:down()
-    elseif key == "h" then
-        hidden = not hidden
     end
 end
 
