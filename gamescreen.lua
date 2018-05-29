@@ -17,6 +17,8 @@ local towerHeightPx = 669
 local cardWidthPx = 200
 local cardHeightPx = 300
 local cardSpacePx = 25
+local statsWidthPx = 320
+local statsHeightPx = 350
 
 local function getBaseXY(up)
     local hW = love.graphics.getWidth() / 2
@@ -190,6 +192,9 @@ function renderStats()
     local x = 50
     local y = 40
 
+    love.graphics.setColor(1, 1, 1, 0.5)
+    love.graphics.rectangle("fill", 10, 10, statsWidthPx, statsHeightPx)
+    love.graphics.rectangle("fill", love.graphics.getWidth() - statsWidthPx - 10, 10, statsWidthPx, statsHeightPx)
     love.graphics.setFont(Fonts["black-chancery-24"])
     love.graphics.setColor(0, 0, 0)
     love.graphics.printf(p1Stats, x, y, love.graphics.getWidth(), "left")
