@@ -7,6 +7,7 @@ PlayerResources = {
         ["handsize"]      = 5,
         ["modBuildCost"]  = 0,
         ["modDamageMult"] = 1,
+        ["modWallMult"]   = 1,
         ["permanents"]    = {}
     },
     
@@ -17,6 +18,7 @@ PlayerResources = {
         ["handsize"]      = 5,
         ["modBuildCost"]  = 0,
         ["modDamageMult"] = 1,
+        ["modWallMult"]   = 1,
         ["permanents"]    = {}
     }
     

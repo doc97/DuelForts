@@ -55,7 +55,7 @@ function logic:addPermanent(target, name, hp)
         elseif name == "Bomb Expert 'Vinnie'" then
             logic:setResource(target, "modDamageMult", 2, 1, 2)
         elseif name == "Builder 'Bobert'" then
-            logic:modResource(target, "shield", 5, 0, 100)
+            logic:setResource(target, "modWallMult", 2, 1, 2)
         elseif name == "Conjurer 'Vinhelm'" then
         end
     end
@@ -81,8 +81,7 @@ function logic:removePermanent(target, name)
         elseif name == "Bomb Expert 'Vinnie'" then
             logic:setResource(target, "modDamageMult", 1, 1, 2)
         elseif name == "Builder 'Bobert'" then
-            local newValue = math.max(0, logic:getResource(target, "shield") - 5)
-            logic:setResource(target, "shield", newValue, 0, 100)
+            logic:setResource(target, "modWallMult", 1, 1, 2)
         elseif name == "Conjurer 'Vinhelm'" then
         end
 
@@ -92,11 +91,11 @@ end
 function logic:removeAllPermanents(target)
     if target == "player1" then
         for k, v in pairs(PlayerResources.p1Resources.permanents) do
-            removePermanent(k)
+            logic:removePermanent(target, k)
         end
     else
         for k, v in pairs(PlayerResources.p2Resources.permanents) do
-            removePermanent(k)
+            logic:removePermanent(target, k)
         end
     end
 end
@@ -138,6 +137,8 @@ function logic:activateCard(base, card, cost)
         logic:destroy(logic.turn, card.qty, mod)
     elseif base == "discard" then
         logic:discard(logic.turn, card.qty)
+    elseif base == "shield" then
+        logic:modResource(logic.turn, card.target, card.qty * logic:getResource(logic.turn, "modWallMult"), 1, 100)
     else
         logic:modResource(logic.turn, card.target, card.qty, 0, 100)
     end
@@ -148,19 +149,19 @@ function logic:special(player, name)
         logic:removeAllPermanents("player1")
         logic:removeAllPermanents("player2")
     elseif name == "Pox" then   -- multiply by 1/3 then ceil and add hand size destruction
-        local varHealth = math.ceil(PlayerResources.p1Resources.health * 0.33)
-        local varShield = math.ceil(PlayerResources.p1Resources.shield * 0.33)
-        local varHand = math.ceil(PlayerResources.p1Resources.handsize * 0.33)
-        logic:modResource("player1", "health", -varHealth, 0, 100)
-        logic:modResource("player1", "shield", -varShield, 0, 100)
-        logic:modResource("player1", "handsize", -varHand, 3, 5)
+        local varHealth = math.ceil(PlayerResources.p1Resources.health * 0.5)
+        local varShield = math.ceil(PlayerResources.p1Resources.shield * 0.5)
+        local varHand = math.ceil(PlayerResources.p1Resources.handsize * 0.5)
+        logic:setResource("player1", "health", varHealth, 0, 100)
+        logic:setResource("player1", "shield", varShield, 0, 100)
+        logic:setResource("player1", "handsize", varHand, 3, 5)
  
-        local varHealth = math.ceil(PlayerResources.p2Resources.health * 0.33)
-        local varShield = math.ceil(PlayerResources.p2Resources.shield * 0.33)
-        local varHand = math.ceil(PlayerResources.p2Resources.handsize * 0.33)
-        logic:modResource("player2", "health", -varHealth, 0, 100)
-        logic:modResource("player2", "shield", -varShield, 0, 100)
-        logic:modResource("player2", "handsize", -varHand, 3, 5)
+        varHealth = math.ceil(PlayerResources.p2Resources.health * 0.5)
+        varShield = math.ceil(PlayerResources.p2Resources.shield * 0.5)
+        varHand = math.ceil(PlayerResources.p2Resources.handsize * 0.5)
+        logic:setResource("player2", "health", varHealth, 0, 100)
+        logic:setResource("player2", "shield", varShield, 0, 100)
+        logic:setResource("player2", "handsize", varHand, 3, 5)
     end
 end
 
@@ -178,14 +179,19 @@ function logic:destroy(player, qty, mod)
     local shield = logic:getResource(target, "shield")
 
     if shield > 0 then
-        logic:modResource(target, "shield", -qtyLeft, 0, 100)
-    else
-        logic:modResource(target, "health", -qtyLeft, 0, 100)
-        for k, v in pairs(logic:getResource(target, "permanents")) do
-            v.health = v.health - qtyLeft
-            if v.health <= 0 then
-                logic:removePermanent(target, k)
-            end
+        logic:modResource(target, "shield", qtyLeft, 0, 100)
+        if shield < qtyLeft then
+            qtyLeft = math.ceil((qtyLeft - shield) / 2)
+        else
+            qtyLeft = 0
+        end
+    end
+
+    logic:modResource(target, "health", -qtyLeft, 0, 100)
+    for k, v in pairs(logic:getResource(target, "permanents")) do
+        v.health = v.health - qtyLeft
+        if v.health <= 0 then
+            logic:removePermanent(target, k)
         end
     end
 
