@@ -1,4 +1,5 @@
 # DuelForts
+<<<<<<< HEAD
 Duel forts is a two player duel game, where each player tries to grow
 their own tower while trying to hinder the other ones growth.
 
@@ -32,3 +33,4 @@ Art - [Jimi Koivu](https://jimikoo.wordpress.com/)
 ##### Note:  
 *Due to some peoples aversion to cards as abstract objects, 
 it might help to imagine the choices as cylinders.*
+
