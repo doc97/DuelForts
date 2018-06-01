@@ -1,13 +1,12 @@
 # DuelForts
-<<<<<<< HEAD
 Duel forts is a two player duel game, where each player tries to grow
 their own tower while trying to hinder the other ones growth.
 
 This game was done as a part of a small 24-hour gamejam held in an island.
 
 ## Requirements
-* Lua (5.3.4 and 5.2.4 tested)
-* Löve (11.1)
+* [Lua](https://www.lua.org/download.html) (5.3.4 and 5.2.4 tested)
+* [Löve (11.1)](https://love2d.org/)
 
 (Tested with debian, mint and arch distributions)
 ## Gameplay
